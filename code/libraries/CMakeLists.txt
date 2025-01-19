@@ -1,0 +1,10 @@
+message(STATUS "\n**********************************************************************************\n")
+message(STATUS "\n## In directory: ${CMAKE_CURRENT_SOURCE_DIR}")
+
+add_subdirectory(SDL3CPP)
+add_subdirectory(test-platform)
+add_subdirectory(serialization)
+add_subdirectory(osal)
+add_subdirectory(utility)
+add_subdirectory(filesystem)
+add_subdirectory(tracing)
