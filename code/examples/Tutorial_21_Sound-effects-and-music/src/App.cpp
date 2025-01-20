@@ -51,7 +51,7 @@ bool App::Init(int width, int height)
     {
         m_screenWidth = width;
         m_screenHeight = height;
-        GetSDL(SDL_INIT_VIDEO);
+        GetSDL(SDLInitFlags::Video);
         // Create window
         if (!m_window.Create("SDL Tutorial", m_screenWidth, m_screenHeight, 0))
         {

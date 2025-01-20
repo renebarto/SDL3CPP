@@ -33,7 +33,7 @@ bool App::Init()
 
     try
     {
-        GetSDL(SDL_INIT_VIDEO);
+        GetSDL(SDLInitFlags::Video);
         // Create window
         if (!m_window.Create("SDL Tutorial", SCREEN_WIDTH, SCREEN_HEIGHT, 0))
         {

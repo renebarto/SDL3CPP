@@ -67,22 +67,17 @@ bool App::Init()
 
     try
     {
-        SDL &sdl = GetSDL(SDL_INIT_VIDEO);
+        SDL &sdl = GetSDL(SDLInitFlags::Video | SDLInitFlags::Mixer);
 
-        int displayCount{};
-        auto displayNumbers = SDL_GetDisplays(&displayCount);
-
-        std::map<SDL_DisplayID, SDL_DisplayMode> displayInfo;
-        for (int i = 0; i < displayCount; ++i)
+        auto displayConfiguration = sdl.GetDisplayConfiguration();
+        DisplayInfo displayInfo{};
+        if (!displayConfiguration.GetPrimaryDisplayInfo(displayInfo))
         {
-            auto displayMode = SDL_GetCurrentDisplayMode(displayNumbers[i]);
-            displayInfo.insert({displayNumbers[i], *displayMode });
+            sdl.Log("Could not retrieve primary display info: {}", SDL_GetError());
+            success = false;
         }
-        SDL_free(displayNumbers);
-        auto primaryDisplay = SDL_GetPrimaryDisplay();
-        auto const &primaryDisplayInfo = displayInfo[primaryDisplay];
-        m_displayScreenWidth = primaryDisplayInfo.w;
-        m_displayScreenHeight = primaryDisplayInfo.h;
+        m_displayScreenWidth = displayInfo.w;
+        m_displayScreenHeight = displayInfo.h;
 
         // Create window
         if (!m_window.Create("ZX Spectrum Emulator", m_displayScreenWidth, m_displayScreenHeight, 0))

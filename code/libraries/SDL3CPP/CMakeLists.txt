@@ -40,7 +40,9 @@ set(PROJECT_LIBS
     )
 
 set(PROJECT_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/AudioConfiguration.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Color.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/DisplayConfiguration.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Events.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Font.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/FPoint.cpp
@@ -59,7 +61,9 @@ set(PROJECT_SOURCES
 
 set(PROJECT_INCLUDES_PUBLIC )
 set(PROJECT_INCLUDES_PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3CPP/AudioConfiguration.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3CPP/Color.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3CPP/DisplayConfiguration.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3CPP/Events.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3CPP/Font.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3CPP/FPoint.h
@@ -67,6 +71,7 @@ set(PROJECT_INCLUDES_PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3CPP/Hints.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3CPP/Lib.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3CPP/Optional.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3CPP/PixelFormat.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3CPP/Point.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3CPP/Rect.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3CPP/Renderer.h
