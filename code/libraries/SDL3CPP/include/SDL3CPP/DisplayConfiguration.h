@@ -28,6 +28,8 @@ private:
 
 public:
     DisplayConfiguration();
+    void Init();
+
     int GetDisplayCount();
     DisplayID GetPrimaryDisplay();
     bool GetDisplayInfo(DisplayID displayID, DisplayInfo& info);

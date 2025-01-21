@@ -87,8 +87,8 @@ SDL::SDL(SDLInitFlags flags /*= DefaultFlags */)
     {
         // Nothing to do
     }
-    m_displayConfiguration = DisplayConfiguration();
-    m_audioConfiguration = AudioConfiguration();
+    m_displayConfiguration.Init();
+    m_audioConfiguration.Init();
 }
 
 SDL::~SDL()

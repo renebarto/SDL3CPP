@@ -14,10 +14,6 @@ static constexpr int ZXSpectrumScreenHeight = 192;
 static constexpr int ZXSpectrumScreenBorderWidth = 48;
 static constexpr int ZXSpectrumScreenBorderHeight = 48;
 
-// Screen dimension constants
-static constexpr int ScreenWidth = 640;
-static constexpr int ScreenHeight = 480;
-
 App::App()
     : m_savedTraceFilter{}
     , m_lineWriter{}

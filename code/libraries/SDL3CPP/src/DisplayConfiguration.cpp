@@ -21,17 +21,21 @@ DisplayConfiguration::DisplayConfiguration()
     , m_primaryDisplay{}
     , m_displayInfo{}
 {
-        auto displayNumbers = SDL_GetDisplays(&m_displayCount);
+}
 
-        for (int i = 0; i < m_displayCount; ++i)
-        {
-            auto displayMode = SDL_GetCurrentDisplayMode(displayNumbers[i]);
-            DisplayInfo displayInfo{};
-            CopyDisplayMode(*displayMode, displayInfo);
-            m_displayInfo.insert({displayNumbers[i], displayInfo });
-        }
-        SDL_free(displayNumbers);
-        m_primaryDisplay = static_cast<DisplayID>(SDL_GetPrimaryDisplay());
+void DisplayConfiguration::Init()
+{
+    auto displayNumbers = SDL_GetDisplays(&m_displayCount);
+
+    for (int i = 0; i < m_displayCount; ++i)
+    {
+        auto displayMode = SDL_GetCurrentDisplayMode(displayNumbers[i]);
+        DisplayInfo displayInfo{};
+        CopyDisplayMode(*displayMode, displayInfo);
+        m_displayInfo.insert({displayNumbers[i], displayInfo });
+    }
+    SDL_free(displayNumbers);
+    m_primaryDisplay = static_cast<DisplayID>(SDL_GetPrimaryDisplay());
 }
 
 int DisplayConfiguration::GetDisplayCount()
