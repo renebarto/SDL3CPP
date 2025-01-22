@@ -28,10 +28,7 @@ namespace tracing {
 
 IsTraceCategoryEnabledFunction Tracing::m_isTraceCategoryEnabledFunc = nullptr;
 CategorySet<TraceCategory> Tracing::m_defaultTraceFilter = 
-    (TraceCategory::SscfBegin | TraceCategory::SscfEnd | TraceCategory::SscfEvent | 
-     TraceCategory::SscfLib | TraceCategory::ControlLayer | TraceCategory::CanNmtDbt | 
-     TraceCategory::Information | TraceCategory::Log | TraceCategory::BistPostInfo | 
-     TraceCategory::StartupShutdown | TraceCategory::ResultFlow);
+    (TraceCategory::Fatal | TraceCategory::Error | TraceCategory::Information);
 Tracing::Mutex Tracing::m_traceMutex;
 ITraceWriter* Tracing::m_traceWriter = nullptr;
 
@@ -93,17 +90,17 @@ void Tracing::Error(const std::string& path, int line, const std::string& functi
     auto errorCode = error.ErrorCode();
     if (errorCode != -1)
     {
-        Trace(TraceCategory::Information, path, line, functionName, "Error code: {}", serialization::Serialize(error));
+        Trace(TraceCategory::Error, path, line, functionName, "Error code: {}", serialization::Serialize(error));
     }
     else
     {
-        Trace(TraceCategory::Information, path, line, functionName, "Error code: Unknown: {}", error.Message());
+        Trace(TraceCategory::Error, path, line, functionName, "Error code: Unknown: {}", error.Message());
     }
 }
 
 void Tracing::Error(const std::string& path, int line, const std::string& functionName, const utility::GenericError& error)
 {
-    Trace(TraceCategory::Information, path, line, functionName, serialization::Serialize(error));
+    Trace(TraceCategory::Error, path, line, functionName, serialization::Serialize(error));
 }
 
 void Tracing::Fatal(const std::string& path, int line, const std::string& functionName, const utility::Error& error)
@@ -111,18 +108,18 @@ void Tracing::Fatal(const std::string& path, int line, const std::string& functi
     auto errorCode = error.ErrorCode();
     if (errorCode != -1)
     {
-        Trace(TraceCategory::Information, path, line, functionName, "Error code: {}", serialization::Serialize(error));
+        Trace(TraceCategory::Fatal, path, line, functionName, "Error code: {}", serialization::Serialize(error));
     }
     else
     {
-        Trace(TraceCategory::Information, path, line, functionName, "Error code: Unknown: {}", error.Message());
+        Trace(TraceCategory::Fatal, path, line, functionName, "Error code: Unknown: {}", error.Message());
     }
     FatalHandler::FatalExit(error.ErrorCode());
 }
 
 void Tracing::Fatal(const std::string& path, int line, const std::string& functionName, const utility::GenericError& error)
 {
-    Trace(TraceCategory::Information, path, line, functionName, serialization::Serialize(error));
+    Trace(TraceCategory::Fatal, path, line, functionName, serialization::Serialize(error));
     FatalHandler::FatalExit(1);
 }
 

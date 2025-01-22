@@ -42,15 +42,15 @@ namespace tracing {
         // Should print line "Some text" in Yellow
         writer.WriteLine(TraceCategory::FunctionLeave, text);
         // Should print line "Some text" in Green
-        writer.WriteLine(TraceCategory::StartupShutdown, text);
-        // Should print line "Some text" in Magenta
-        writer.WriteLine(TraceCategory::Log, text);
+        writer.WriteLine(TraceCategory::Debug, text);
         // Should print line "Some text" in White
         writer.WriteLine(TraceCategory::Information, text);
-        // Should print line "Some text" in Cyan
-        writer.WriteLine(TraceCategory::Data, text);
-        // Should print line "Some text" in Light Blue
-        writer.WriteLine(TraceCategory::Debug, text);
+        // Should print line "Some text" in Magenta
+        writer.WriteLine(TraceCategory::Warning, text);
+        // Should print line "Some text" in Red
+        writer.WriteLine(TraceCategory::Error, text);
+        // Should print line "Some text" in Bright red
+        writer.WriteLine(TraceCategory::Fatal, text);
     }
 
 } // namespace tracing

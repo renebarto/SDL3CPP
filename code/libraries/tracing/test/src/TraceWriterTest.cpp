@@ -50,7 +50,7 @@ TEST_F(TraceWriterTest, Trace)
 
     traceWriter.Trace(osal::Clock().CurrentTime(), TraceCategory::Information, "FILE", 123, "FUNCTION", "TEXT");
     // std::cout << text << std::endl;
-    EXPECT_TRUE(osal::VerifyMatch(text, TraceRegexTimeStamp + "Info\\|FILE\\:123\\|FUNCTION\\|TraceChannelTest\\|TEXT"));
+    EXPECT_TRUE(osal::VerifyMatch(text, TraceRegexTimeStamp + "Information\\|FILE\\:123\\|FUNCTION\\|TraceChannelTest\\|TEXT"));
 }
 
 } // namespace tracing

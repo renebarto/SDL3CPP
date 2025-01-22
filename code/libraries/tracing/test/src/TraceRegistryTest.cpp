@@ -141,10 +141,10 @@ TEST(TraceRegistryTest, GetItems)
     try {
         auto entry1 = items["dummy"];
         EXPECT_EQ("dummy", entry1->CompilationUnitFileName());
-        EXPECT_EQ(uint32_t{ 0xF11D2800 }, entry1->GetTraceFilter().GetMask());
+        EXPECT_EQ(uint32_t{ 0x0000000F }, entry1->GetTraceFilter().GetMask());
         auto entry2 = items["dummy2"];
         EXPECT_EQ("dummy2", entry2->CompilationUnitFileName());
-        EXPECT_EQ(uint32_t{ 0xF11D2800 }, entry2->GetTraceFilter().GetMask());
+        EXPECT_EQ(uint32_t{ 0x0000000F }, entry2->GetTraceFilter().GetMask());
     }
     catch(...)
     {
@@ -162,7 +162,7 @@ TEST(TraceRegistryTest, Serialize)
 
     std::ostringstream stream;
     stream << registry;
-    EXPECT_EQ("dummy:0xF11D2800\ndummy2:0xF11D2800\n", stream.str());
+    EXPECT_EQ("dummy:0x0000000F\ndummy2:0x0000000F\n", stream.str());
 }
 
 TEST(TraceRegistryTest, SerializeActual)

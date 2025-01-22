@@ -22,10 +22,8 @@ namespace tracing {
 
 TraceRegistry::TraceRegistry()
     : m_defaultTraceFilter(
-        (TraceCategory::SscfBegin | TraceCategory::SscfEnd | TraceCategory::SscfEvent |
-        TraceCategory::SscfLib | TraceCategory::ControlLayer | TraceCategory::CanNmtDbt |
-        TraceCategory::Information | TraceCategory::Log | TraceCategory::BistPostInfo |
-        TraceCategory::StartupShutdown | TraceCategory::ResultFlow))
+        (TraceCategory::Fatal | TraceCategory::Error | TraceCategory::Warning |
+        TraceCategory::Information))
     , m_traceEntries()
     , m_updateListenerMutex()
     , m_updateListener()

@@ -102,14 +102,14 @@ inline void TraceFuncLeave(const std::string& path, int line, const std::string&
     tracing::Tracing::Trace(tracing::TraceCategory::FunctionLeave, path, line, functionName, format, args ...);
 }
 
-inline void TraceStartup(const std::string& path, int line, const std::string& functionName, const std::string& message)
+inline void TraceDebug(const std::string& path, int line, const std::string& functionName, const std::string& message)
 {
-    tracing::Tracing::Trace(tracing::TraceCategory::StartupShutdown, path, line, functionName, message);
+    tracing::Tracing::Trace(tracing::TraceCategory::Debug, path, line, functionName, message);
 }
-
-inline void TraceShutdown(const std::string& path, int line, const std::string& functionName, const std::string& message)
+template <typename ... Args>
+inline void TraceDebug(const std::string& path, int line, const std::string& functionName, const std::string& format, Args const& ... args) noexcept
 {
-    tracing::Tracing::Trace(tracing::TraceCategory::StartupShutdown, path, line, functionName, message);
+    tracing::Tracing::Trace(tracing::TraceCategory::Debug, path, line, functionName, format, args ...);
 }
 
 inline void TraceInfo(const std::string& path, int line, const std::string& functionName, const std::string& message)
@@ -122,24 +122,34 @@ inline void TraceInfo(const std::string& path, int line, const std::string& func
     tracing::Tracing::Trace(tracing::TraceCategory::Information, path, line, functionName, format, args ...);
 }
 
-inline void TraceData(const std::string& path, int line, const std::string& functionName, const std::string& message)
+inline void TraceWarning(const std::string& path, int line, const std::string& functionName, const std::string& message)
 {
-    tracing::Tracing::Trace(tracing::TraceCategory::Data, path, line, functionName, message);
+    tracing::Tracing::Trace(tracing::TraceCategory::Warning, path, line, functionName, message);
 }
 template <typename ... Args>
-inline void TraceData(const std::string& path, int line, const std::string& functionName, const std::string& format, Args const& ... args) noexcept
+inline void TraceWarning(const std::string& path, int line, const std::string& functionName, const std::string& format, Args const& ... args) noexcept
 {
-    tracing::Tracing::Trace(tracing::TraceCategory::Data, path, line, functionName, format, args ...);
+    tracing::Tracing::Trace(tracing::TraceCategory::Warning, path, line, functionName, format, args ...);
 }
 
-inline void TraceDebug(const std::string& path, int line, const std::string& functionName, const std::string& message)
+inline void TraceError(const std::string& path, int line, const std::string& functionName, const std::string& message)
 {
-    tracing::Tracing::Trace(tracing::TraceCategory::Debug, path, line, functionName, message);
+    tracing::Tracing::Trace(tracing::TraceCategory::Error, path, line, functionName, message);
 }
 template <typename ... Args>
-inline void TraceDebug(const std::string& path, int line, const std::string& functionName, const std::string& format, Args const& ... args) noexcept
+inline void TraceError(const std::string& path, int line, const std::string& functionName, const std::string& format, Args const& ... args) noexcept
 {
-    tracing::Tracing::Trace(tracing::TraceCategory::Debug, path, line, functionName, format, args ...);
+    tracing::Tracing::Trace(tracing::TraceCategory::Error, path, line, functionName, format, args ...);
+}
+
+inline void TraceFatal(const std::string& path, int line, const std::string& functionName, const std::string& message)
+{
+    tracing::Tracing::Trace(tracing::TraceCategory::Fatal, path, line, functionName, message);
+}
+template <typename ... Args>
+inline void TraceFatal(const std::string& path, int line, const std::string& functionName, const std::string& format, Args const& ... args) noexcept
+{
+    tracing::Tracing::Trace(tracing::TraceCategory::Fatal, path, line, functionName, format, args ...);
 }
 
 inline void TraceFatalCheck(bool condition, const std::string& path, int line, const std::string& functionName, const std::string& message)
@@ -161,12 +171,14 @@ inline void TraceFatalCheck(bool condition, const std::string& path, int line, c
 
 #define TRACE_INFRA(category, message, ...) tracing::Tracing::Trace(category, __FILE__, __LINE__, __func__, std::string(message), ## __VA_ARGS__)
 
-#define TRACE_ERROR(object) tracing::Tracing::Error(__FILE__, __LINE__, __func__, object)
-#define TRACE_FATAL(object) tracing::Tracing::Fatal(__FILE__, __LINE__, __func__, object)
+#define FATAL(object) tracing::Tracing::Fatal(__FILE__, __LINE__, __func__, object)
+#define ERROR(object) tracing::Tracing::Error(__FILE__, __LINE__, __func__, object)
+#define TRACE_FATAL(message, ...) tracing::Tracing::Trace(tracing::TraceCategory::Fatal, __FILE__, __LINE__, __func__, std::string(message), ## __VA_ARGS__)
+#define TRACE_ERROR(message, ...) tracing::Tracing::Trace(tracing::TraceCategory::Error, __FILE__, __LINE__, __func__, std::string(message), ## __VA_ARGS__)
+#define TRACE_WARNING(message, ...) tracing::Tracing::Trace(tracing::TraceCategory::Warning, __FILE__, __LINE__, __func__, std::string(message), ## __VA_ARGS__)
 #define TRACE_THROW(object) tracing::Tracing::Throw(__FILE__, __LINE__, __func__, object)
 
 #define TRACE_INFO(message, ...) tracing::Tracing::Trace(tracing::TraceCategory::Information, __FILE__, __LINE__, __func__, std::string(message), ## __VA_ARGS__)
 #define TRACE_DEBUG(message, ...) tracing::Tracing::Trace(tracing::TraceCategory::Debug, __FILE__, __LINE__, __func__, std::string(message), ## __VA_ARGS__)
-#define TRACE_DATA(message, ...) tracing::Tracing::Trace(tracing::TraceCategory::Data, __FILE__, __LINE__, __func__, std::string(message), ## __VA_ARGS__)
 
 #define TRACE_FATALCHECK(condition, message, ...) TraceFatalCheck(condition, __FILE__, __LINE__, __func__, std::string(message), ## __VA_ARGS__)

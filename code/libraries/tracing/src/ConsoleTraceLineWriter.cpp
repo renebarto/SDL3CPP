@@ -26,11 +26,11 @@ static osal::ConsoleColor GetColorForCategory(TraceCategory category)
     {
     case TraceCategory::FunctionEnter:  return osal::ConsoleColor::Yellow;
     case TraceCategory::FunctionLeave:  return osal::ConsoleColor::Yellow;
-    case TraceCategory::StartupShutdown:return osal::ConsoleColor::Green;
-    case TraceCategory::Log:            return osal::ConsoleColor::Magenta;
+    case TraceCategory::Debug:          return osal::ConsoleColor::Cyan;
     case TraceCategory::Information:    return osal::ConsoleColor::White;
-    case TraceCategory::Data:           return osal::ConsoleColor::Cyan;
-    case TraceCategory::Debug:          return osal::ConsoleColor::Intensity | osal::ConsoleColor::Blue;
+    case TraceCategory::Warning:        return osal::ConsoleColor::Magenta;
+    case TraceCategory::Error:          return osal::ConsoleColor::Red;
+    case TraceCategory::Fatal:          return osal::ConsoleColor::Intensity | osal::ConsoleColor::Red;
 
         default: return osal::ConsoleColor::Default;
     }

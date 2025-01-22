@@ -69,48 +69,48 @@ public:
 TEST_F(TracingTest, IfTracingFunctionsSetButNothingEnabledNothingHappens)
 {
     Tracing::SetDefaultTraceFilter(TraceCategory::None);
-    Tracing::Trace(TraceCategory::StartupShutdown, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Information, "MyFile", 123, "MyFunction", "Hello World");
     CheckMatch({ }, m_lineWriter.GetResult());
 }
 
 TEST_F(TracingTest, IfTracingFunctionsSetAndCategoryEnabledTraceIsWritten)
 {
     Tracing::SetDefaultTraceFilter(TraceCategory::All);
-    Tracing::Trace(TraceCategory::StartupShutdown, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Information, "MyFile", 123, "MyFunction", "Hello World");
     std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "StartupShutdown\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
+        TraceRegexTimeStamp + "Information\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
     };
     CheckMatch(regexStrings, m_lineWriter.GetResult());
 }
 
 TEST_F(TracingTest, TracingOnlyForEnabledCategory)
 {
-    Tracing::SetDefaultTraceFilter(TraceCategory::StartupShutdown);
-    Tracing::Trace(TraceCategory::StartupShutdown, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::SetDefaultTraceFilter(TraceCategory::Information);
+    Tracing::Trace(TraceCategory::Information, "MyFile", 123, "MyFunction", "Hello World");
     std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "StartupShutdown\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
+        TraceRegexTimeStamp + "Information\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
     };
     CheckMatch(regexStrings, m_lineWriter.GetResult());
 }
 
 TEST_F(TracingTest, IfNoTracingEnableFunctionSetOnlyDefaultCategoriesAreEnabled)
 {
-    // Assumption: default only StartupShutdown enabled
-    Tracing::Trace(TraceCategory::StartupShutdown, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::Data, "MyFile", 123, "MyFunction", "Hello World");
+    // Assumption: default only Information enabled
+    Tracing::Trace(TraceCategory::Information, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Warning, "MyFile", 123, "MyFunction", "Hello World");
     std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "StartupShutdown\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
+        TraceRegexTimeStamp + "Information\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
     };
     CheckMatch(regexStrings, m_lineWriter.GetResult());
 }
 
 TEST_F(TracingTest, IfDefaultFilterIsChangedOnlySpecifiedCategoriesAreEnabled)
 {
-    Tracing::SetDefaultTraceFilter(TraceCategory::StartupShutdown);
-    Tracing::Trace(TraceCategory::StartupShutdown, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::Data, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::SetDefaultTraceFilter(TraceCategory::Information);
+    Tracing::Trace(TraceCategory::Information, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Warning, "MyFile", 123, "MyFunction", "Hello World");
     std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "StartupShutdown\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
+        TraceRegexTimeStamp + "Information\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
     };
     CheckMatch(regexStrings, m_lineWriter.GetResult());
 }
@@ -118,71 +118,71 @@ TEST_F(TracingTest, IfDefaultFilterIsChangedOnlySpecifiedCategoriesAreEnabled)
 TEST_F(TracingTest, TracingCategories)
 {
     Tracing::SetDefaultTraceFilter(TraceCategory::All);
-    Tracing::Trace(TraceCategory::SscfBegin, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::SscfEnd, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::SscfEvent, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::SscfLib, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::DriverLayer, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::Physical, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::ApplicationLayer, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::ControlLayer, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::PipelineIn, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::FunctionEnter, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::FunctionLeave, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::CanNmtDbt, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::Information, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::Log, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::Interrupt, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::BistPostInfo, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::SscfCan, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::BitfieldDriver, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::StartupShutdown, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Cat80000000, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Cat40000000, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Cat20000000, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Cat10000000, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Cat08000000, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Cat04000000, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Cat02000000, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Cat01000000, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Cat00800000, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Cat00400000, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Cat00200000, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Cat00100000, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Cat00080000, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Cat00040000, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Cat00020000, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Cat00010000, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Cat00008000, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Cat00004000, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Cat00002000, "MyFile", 123, "MyFunction", "Hello World");
     Tracing::Trace(TraceCategory::Cat00001000, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::ResultFlow, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Cat00000800, "MyFile", 123, "MyFunction", "Hello World");
     Tracing::Trace(TraceCategory::Cat00000400, "MyFile", 123, "MyFunction", "Hello World");
     Tracing::Trace(TraceCategory::Cat00000200, "MyFile", 123, "MyFunction", "Hello World");
     Tracing::Trace(TraceCategory::Cat00000100, "MyFile", 123, "MyFunction", "Hello World");
     Tracing::Trace(TraceCategory::Cat00000080, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::Cat00000040, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::Cat00000020, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::Cat00000010, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::Cat00000008, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::Data, "MyFile", 123, "MyFunction", "Hello World");
-    Tracing::Trace(TraceCategory::Flow, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::FunctionEnter, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::FunctionLeave, "MyFile", 123, "MyFunction", "Hello World");
     Tracing::Trace(TraceCategory::Debug, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Information, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Warning, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Error, "MyFile", 123, "MyFunction", "Hello World");
+    Tracing::Trace(TraceCategory::Fatal, "MyFile", 123, "MyFunction", "Hello World");
     std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "SscfBeg\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "SscfEnd\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "SscfEv\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "SscfLib\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "Drvr\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "Phys\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "Appl\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "Ctrl\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "PlIn\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "Enter\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "Leave\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "NmtDbt\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "Info\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "Log\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "Interrupt\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "BistPostInfo\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "SscfCan\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "BitfieldDriver\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "StartupShutdown\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Cat80000000\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Cat40000000\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Cat20000000\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Cat10000000\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Cat08000000\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Cat04000000\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Cat02000000\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Cat01000000\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Cat00800000\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Cat00400000\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Cat00200000\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Cat00100000\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Cat00080000\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Cat00040000\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Cat00020000\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Cat00010000\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Cat00008000\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Cat00004000\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Cat00002000\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
         TraceRegexTimeStamp + "Cat00001000\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "ResultFlow\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Cat00000800\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
         TraceRegexTimeStamp + "Cat00000400\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
         TraceRegexTimeStamp + "Cat00000200\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
         TraceRegexTimeStamp + "Cat00000100\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
         TraceRegexTimeStamp + "Cat00000080\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "Cat00000040\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "Cat00000020\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "Cat00000010\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "Cat00000008\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "Data\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "Flow\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
-        TraceRegexTimeStamp + "Debug\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
+        TraceRegexTimeStamp + "Enter\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Leave\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Debug\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Information\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Warning\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Error\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World",
+        TraceRegexTimeStamp + "Fatal\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
     };
     CheckMatch(regexStrings, m_lineWriter.GetResult());
 }
@@ -192,7 +192,7 @@ TEST_F(TracingTest, TracingWithFormat)
     Tracing::SetDefaultTraceFilter(TraceCategory::Information);
     Tracing::Trace(TraceCategory::Information, "MyFile", 123, "MyFunction", "{0} {1} (C) {2,4:D}", "Hello", "World", 2020);
     std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "Info\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World \\(C\\) 2020"
+        TraceRegexTimeStamp + "Information\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World \\(C\\) 2020"
     };
     CheckMatch(regexStrings, m_lineWriter.GetResult());
 }
@@ -202,7 +202,7 @@ TEST_F(TracingTest, Error)
     utility::Error error(2, strerror(2), "Fake error");
     Tracing::Error("MyFile", 123, "MyFunction", error);
     std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "Info\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Error code\\: 2 \\(02\\)\\: No such file or directory Fake error"
+        TraceRegexTimeStamp + "Error\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Error code\\: 2 \\(02\\)\\: No such file or directory Fake error"
     };
     CheckMatch(regexStrings, m_lineWriter.GetResult());
     EXPECT_EQ(0, m_exitCode);
@@ -213,7 +213,7 @@ TEST_F(TracingTest, ErrorUnknownError)
     utility::Error error(-1, "", "Fake error");
     Tracing::Error("MyFile", 123, "MyFunction", error);
     std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "Info\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Error code\\: Unknown\\: Fake error"
+        TraceRegexTimeStamp + "Error\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Error code\\: Unknown\\: Fake error"
     };
     CheckMatch(regexStrings, m_lineWriter.GetResult());
     EXPECT_EQ(0, m_exitCode);
@@ -225,7 +225,7 @@ TEST_F(TracingTest, Fatal)
     EXPECT_EQ(0, m_exitCode);
     Tracing::Fatal("MyFile", 123, "MyFunction", error);
     std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "Info\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Error code\\: 2 \\(02\\)\\: No such file or directory Fake error"
+        TraceRegexTimeStamp + "Fatal\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Error code\\: 2 \\(02\\)\\: No such file or directory Fake error"
     };
     CheckMatch(regexStrings, m_lineWriter.GetResult());
     EXPECT_EQ(2, m_exitCode);
@@ -237,7 +237,7 @@ TEST_F(TracingTest, FatalUnknownError)
     EXPECT_EQ(0, m_exitCode);
     Tracing::Fatal("MyFile", 123, "MyFunction", error);
     std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "Info\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Error code\\: Unknown\\: Fake error"
+        TraceRegexTimeStamp + "Fatal\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Error code\\: Unknown\\: Fake error"
     };
     CheckMatch(regexStrings, m_lineWriter.GetResult());
     EXPECT_EQ(-1, m_exitCode);
@@ -249,7 +249,7 @@ TEST_F(TracingTest, FatalGenericError)
     EXPECT_EQ(0, m_exitCode);
     Tracing::Fatal("MyFile", 123, "MyFunction", error);
     std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "Info\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Fake error"
+        TraceRegexTimeStamp + "Fatal\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Fake error"
     };
     CheckMatch(regexStrings, m_lineWriter.GetResult());
     EXPECT_EQ(1, m_exitCode);
@@ -269,7 +269,7 @@ TEST_F(TracingTest, ThrowError)
         result = e.what();
     }
     EXPECT_TRUE(osal::VerifyMatch(result,
-        TraceRegexTimeStamp + "Info MyFile\\:123 \\(MyFunction\\)\\: Fake error\\: Error code\\: 2 \\(02\\)\\: No such file or directory"));
+        TraceRegexTimeStamp + "Information MyFile\\:123 \\(MyFunction\\)\\: Fake error\\: Error code\\: 2 \\(02\\)\\: No such file or directory"));
     EXPECT_EQ(0, m_exitCode);
 }
 
@@ -287,7 +287,7 @@ TEST_F(TracingTest, ThrowGenericError)
         result = e.what();
     }
     EXPECT_TRUE(osal::VerifyMatch(result, 
-        TraceRegexTimeStamp + "Info MyFile\\:123 \\(MyFunction\\)\\: Fake error"));
+        TraceRegexTimeStamp + "Information MyFile\\:123 \\(MyFunction\\)\\: Fake error"));
     EXPECT_EQ(0, m_exitCode);
 }
 
@@ -331,66 +331,6 @@ TEST_F(TracingTest, TraceFuncLeaveFormatted)
     CheckMatch(regexStrings, m_lineWriter.GetResult());
 }
 
-TEST_F(TracingTest, TraceStartup)
-{
-    Tracing::SetDefaultTraceFilter(TraceCategory::All);
-    TraceStartup("MyFile", 123, "MyFunction", "Hello World");
-    std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "StartupShutdown\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
-    };
-    CheckMatch(regexStrings, m_lineWriter.GetResult());
-}
-
-TEST_F(TracingTest, TraceShutdown)
-{
-    Tracing::SetDefaultTraceFilter(TraceCategory::All);
-    TraceShutdown("MyFile", 123, "MyFunction", "Hello World");
-    std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "StartupShutdown\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
-    };
-    CheckMatch(regexStrings, m_lineWriter.GetResult());
-}
-
-TEST_F(TracingTest, TraceInfoString)
-{
-    Tracing::SetDefaultTraceFilter(TraceCategory::All);
-    TraceInfo("MyFile", 123, "MyFunction", "Hello World");
-    std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "Info\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
-    };
-    CheckMatch(regexStrings, m_lineWriter.GetResult());
-}
-
-TEST_F(TracingTest, TraceInfoFormatted)
-{
-    Tracing::SetDefaultTraceFilter(TraceCategory::All);
-    TraceInfo("MyFile", 123, "MyFunction", "{0} {1}", "Hello", "World");
-    std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "Info\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
-    };
-    CheckMatch(regexStrings, m_lineWriter.GetResult());
-}
-
-TEST_F(TracingTest, TraceDataString)
-{
-    Tracing::SetDefaultTraceFilter(TraceCategory::All);
-    TraceData("MyFile", 123, "MyFunction", "Hello World");
-    std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "Data\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
-    };
-    CheckMatch(regexStrings, m_lineWriter.GetResult());
-}
-
-TEST_F(TracingTest, TraceDataFormatted)
-{
-    Tracing::SetDefaultTraceFilter(TraceCategory::All);
-    TraceData("MyFile", 123, "MyFunction", "{0} {1}", "Hello", "World");
-    std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "Data\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
-    };
-    CheckMatch(regexStrings, m_lineWriter.GetResult());
-}
-
 TEST_F(TracingTest, TraceDebugString)
 {
     Tracing::SetDefaultTraceFilter(TraceCategory::All);
@@ -411,6 +351,86 @@ TEST_F(TracingTest, TraceDebugFormatted)
     CheckMatch(regexStrings, m_lineWriter.GetResult());
 }
 
+TEST_F(TracingTest, TraceInfoString)
+{
+    Tracing::SetDefaultTraceFilter(TraceCategory::All);
+    TraceInfo("MyFile", 123, "MyFunction", "Hello World");
+    std::vector<std::string> regexStrings{
+        TraceRegexTimeStamp + "Information\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
+    };
+    CheckMatch(regexStrings, m_lineWriter.GetResult());
+}
+
+TEST_F(TracingTest, TraceInfoFormatted)
+{
+    Tracing::SetDefaultTraceFilter(TraceCategory::All);
+    TraceInfo("MyFile", 123, "MyFunction", "{0} {1}", "Hello", "World");
+    std::vector<std::string> regexStrings{
+        TraceRegexTimeStamp + "Information\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
+    };
+    CheckMatch(regexStrings, m_lineWriter.GetResult());
+}
+
+TEST_F(TracingTest, TraceWarningString)
+{
+    Tracing::SetDefaultTraceFilter(TraceCategory::All);
+    TraceWarning("MyFile", 123, "MyFunction", "Hello World");
+    std::vector<std::string> regexStrings{
+        TraceRegexTimeStamp + "Warning\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
+    };
+    CheckMatch(regexStrings, m_lineWriter.GetResult());
+}
+
+TEST_F(TracingTest, TraceWarningFormatted)
+{
+    Tracing::SetDefaultTraceFilter(TraceCategory::All);
+    TraceWarning("MyFile", 123, "MyFunction", "{0} {1}", "Hello", "World");
+    std::vector<std::string> regexStrings{
+        TraceRegexTimeStamp + "Warning\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
+    };
+    CheckMatch(regexStrings, m_lineWriter.GetResult());
+}
+
+TEST_F(TracingTest, TraceErrorString)
+{
+    Tracing::SetDefaultTraceFilter(TraceCategory::All);
+    TraceError("MyFile", 123, "MyFunction", "Hello World");
+    std::vector<std::string> regexStrings{
+        TraceRegexTimeStamp + "Error\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
+    };
+    CheckMatch(regexStrings, m_lineWriter.GetResult());
+}
+
+TEST_F(TracingTest, TraceErrorFormatted)
+{
+    Tracing::SetDefaultTraceFilter(TraceCategory::All);
+    TraceError("MyFile", 123, "MyFunction", "{0} {1}", "Hello", "World");
+    std::vector<std::string> regexStrings{
+        TraceRegexTimeStamp + "Error\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
+    };
+    CheckMatch(regexStrings, m_lineWriter.GetResult());
+}
+
+TEST_F(TracingTest, TraceFatalString)
+{
+    Tracing::SetDefaultTraceFilter(TraceCategory::All);
+    TraceFatal("MyFile", 123, "MyFunction", "Hello World");
+    std::vector<std::string> regexStrings{
+        TraceRegexTimeStamp + "Fatal\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
+    };
+    CheckMatch(regexStrings, m_lineWriter.GetResult());
+}
+
+TEST_F(TracingTest, TraceFatalFormatted)
+{
+    Tracing::SetDefaultTraceFilter(TraceCategory::All);
+    TraceFatal("MyFile", 123, "MyFunction", "{0} {1}", "Hello", "World");
+    std::vector<std::string> regexStrings{
+        TraceRegexTimeStamp + "Fatal\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
+    };
+    CheckMatch(regexStrings, m_lineWriter.GetResult());
+}
+
 TEST_F(TracingTest, FatalCheckPassString)
 {
     Tracing::SetDefaultTraceFilter(TraceCategory::All);
@@ -424,7 +444,7 @@ TEST_F(TracingTest, FatalCheckFailureString)
     Tracing::SetDefaultTraceFilter(TraceCategory::All);
     TraceFatalCheck(false, "MyFile", 123, "MyFunction", "Hello World");
     std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "Info\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
+        TraceRegexTimeStamp + "Fatal\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
     };
     CheckMatch(regexStrings, m_lineWriter.GetResult());
     EXPECT_EQ(1, m_exitCode);
@@ -443,7 +463,7 @@ TEST_F(TracingTest, FatalCheckFailureFormatted)
     Tracing::SetDefaultTraceFilter(TraceCategory::All);
     TraceFatalCheck(false, "MyFile", 123, "MyFunction", "{0} {1}", "Hello", "World");
     std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "Info\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
+        TraceRegexTimeStamp + "Fatal\\|MyFile\\:123\\|MyFunction\\|TracingTest\\|Hello World"
     };
     CheckMatch(regexStrings, m_lineWriter.GetResult());
     EXPECT_EQ(1, m_exitCode);
@@ -454,7 +474,7 @@ TEST_F(TracingTest, TraceMacro)
     Tracing::SetDefaultTraceFilter(TraceCategory::Information);
     TRACE_INFRA(TraceCategory::Information, "{0} {1} (C) {2,4:D}", "Hello", "World", 2020);
     std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "Info\\|\\w+.cpp\\:\\d+\\|\\w+\\|TracingTest\\|Hello World \\(C\\) 2020"
+        TraceRegexTimeStamp + "Information\\|\\w+.cpp\\:\\d+\\|\\w+\\|TracingTest\\|Hello World \\(C\\) 2020"
     };
     CheckMatch(regexStrings, m_lineWriter.GetResult());
 }
@@ -462,9 +482,9 @@ TEST_F(TracingTest, TraceMacro)
 TEST_F(TracingTest, ErrorMacro)
 {
     utility::Error error(-1, "", "Fake error");
-    TRACE_ERROR(error);
+    ERROR(error);
     std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "Info\\|\\w+.cpp\\:\\d+\\|\\w+\\|TracingTest\\|Error code\\: Unknown\\: Fake error"
+        TraceRegexTimeStamp + "Error\\|\\w+.cpp\\:\\d+\\|\\w+\\|TracingTest\\|Error code\\: Unknown\\: Fake error"
     };
     CheckMatch(regexStrings, m_lineWriter.GetResult());
     EXPECT_EQ(0, m_exitCode);
@@ -474,9 +494,9 @@ TEST_F(TracingTest, FatalMacro)
 {
     utility::Error error(-1, "", "Fake error");
     EXPECT_EQ(0, m_exitCode);
-    TRACE_FATAL(error);
+    FATAL(error);
     std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "Info\\|\\w+.cpp\\:\\d+\\|\\w+\\|TracingTest\\|Error code\\: Unknown\\: Fake error"
+        TraceRegexTimeStamp + "Fatal\\|\\w+.cpp\\:\\d+\\|\\w+\\|TracingTest\\|Error code\\: Unknown\\: Fake error"
     };
     CheckMatch(regexStrings, m_lineWriter.GetResult());
     EXPECT_EQ(-1, m_exitCode);
@@ -496,7 +516,7 @@ TEST_F(TracingTest, ThrowMacro)
         result = e.what();
     }
     EXPECT_TRUE(osal::VerifyMatch(result,
-        TraceRegexTimeStamp + "Info \\w+.cpp\\:\\d+ \\(\\w+\\)\\: Fake error"));
+        TraceRegexTimeStamp + "Information \\w+.cpp\\:\\d+ \\(\\w+\\)\\: Fake error"));
     EXPECT_EQ(0, m_exitCode);
 }
 
@@ -505,7 +525,7 @@ TEST_F(TracingTest, TraceInfoMacro)
     Tracing::SetDefaultTraceFilter(TraceCategory::All);
     TRACE_INFO("{0} {1}", "Hello", "World");
     std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "Info\\|\\w+.cpp\\:\\d+\\|\\w+\\|TracingTest\\|Hello World"
+        TraceRegexTimeStamp + "Information\\|\\w+.cpp\\:\\d+\\|\\w+\\|TracingTest\\|Hello World"
     };
     CheckMatch(regexStrings, m_lineWriter.GetResult());
 }
@@ -521,7 +541,7 @@ TEST_F(TracingTest, FatalCheckMacroFailure)
 {
     TRACE_FATALCHECK(false, "{0} {1}", "Hello", "World");
     std::vector<std::string> regexStrings{
-        TraceRegexTimeStamp + "Info\\|\\w+.cpp\\:\\d+\\|\\w+\\|TracingTest\\|Hello World"
+        TraceRegexTimeStamp + "Fatal\\|\\w+.cpp\\:\\d+\\|\\w+\\|TracingTest\\|Hello World"
     };
     CheckMatch(regexStrings, m_lineWriter.GetResult());
     EXPECT_EQ(1, m_exitCode);
@@ -530,8 +550,8 @@ TEST_F(TracingTest, FatalCheckMacroFailure)
 TEST_F(TracingTest, TraceToConsole)
 {
     Tracing::SetDefaultTraceFilter(TraceCategory::All);
-    TraceStartup("MyFile", 123, "MyFunction", "Starting");
-    TraceShutdown("MyFile", 123, "MyFunction", "Stopping");
+    TraceInfo("MyFile", 123, "MyFunction", "Starting");
+    TraceWarning("MyFile", 123, "MyFunction", "Stopping");
 }
 
 } // namespace tracing

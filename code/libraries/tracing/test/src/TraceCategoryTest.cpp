@@ -21,75 +21,75 @@ namespace tracing {
 
 TEST(TraceCategoryTest, Serialize)
 {
-    EXPECT_EQ("SscfBeg",         serialization::Serialize(TraceCategory::SscfBegin));
-    EXPECT_EQ("SscfEnd",         serialization::Serialize(TraceCategory::SscfEnd));
-    EXPECT_EQ("SscfEv",          serialization::Serialize(TraceCategory::SscfEvent));
-    EXPECT_EQ("SscfLib",         serialization::Serialize(TraceCategory::SscfLib));
-    EXPECT_EQ("Drvr",            serialization::Serialize(TraceCategory::DriverLayer));
-    EXPECT_EQ("Phys",            serialization::Serialize(TraceCategory::Physical));
-    EXPECT_EQ("Appl",            serialization::Serialize(TraceCategory::ApplicationLayer));
-    EXPECT_EQ("Ctrl",            serialization::Serialize(TraceCategory::ControlLayer));
-    EXPECT_EQ("PlIn",            serialization::Serialize(TraceCategory::PipelineIn));
-    EXPECT_EQ("Enter",           serialization::Serialize(TraceCategory::FunctionEnter));
-    EXPECT_EQ("Leave",           serialization::Serialize(TraceCategory::FunctionLeave));
-    EXPECT_EQ("NmtDbt",          serialization::Serialize(TraceCategory::CanNmtDbt));
-    EXPECT_EQ("Info",            serialization::Serialize(TraceCategory::Information));
-    EXPECT_EQ("Log",             serialization::Serialize(TraceCategory::Log));
-    EXPECT_EQ("Interrupt",       serialization::Serialize(TraceCategory::Interrupt));
-    EXPECT_EQ("BistPostInfo",    serialization::Serialize(TraceCategory::BistPostInfo));
-    EXPECT_EQ("SscfCan",         serialization::Serialize(TraceCategory::SscfCan));
-    EXPECT_EQ("BitfieldDriver",  serialization::Serialize(TraceCategory::BitfieldDriver));
-    EXPECT_EQ("StartupShutdown", serialization::Serialize(TraceCategory::StartupShutdown));
-    EXPECT_EQ("Cat00001000",     serialization::Serialize(TraceCategory::Cat00001000));
-    EXPECT_EQ("ResultFlow",      serialization::Serialize(TraceCategory::ResultFlow));
-    EXPECT_EQ("Cat00000400",     serialization::Serialize(TraceCategory::Cat00000400));
-    EXPECT_EQ("Cat00000200",     serialization::Serialize(TraceCategory::Cat00000200));
-    EXPECT_EQ("Cat00000100",     serialization::Serialize(TraceCategory::Cat00000100));
-    EXPECT_EQ("Cat00000080",     serialization::Serialize(TraceCategory::Cat00000080));
-    EXPECT_EQ("Cat00000040",     serialization::Serialize(TraceCategory::Cat00000040));
-    EXPECT_EQ("Cat00000020",     serialization::Serialize(TraceCategory::Cat00000020));
-    EXPECT_EQ("Cat00000010",     serialization::Serialize(TraceCategory::Cat00000010));
-    EXPECT_EQ("Cat00000008",     serialization::Serialize(TraceCategory::Cat00000008));
-    EXPECT_EQ("Data",            serialization::Serialize(TraceCategory::Data));
-    EXPECT_EQ("Flow",            serialization::Serialize(TraceCategory::Flow));
-    EXPECT_EQ("Debug",           serialization::Serialize(TraceCategory::Debug));
+    EXPECT_EQ("Cat80000000", serialization::Serialize(TraceCategory::Cat80000000));
+    EXPECT_EQ("Cat40000000", serialization::Serialize(TraceCategory::Cat40000000));
+    EXPECT_EQ("Cat20000000", serialization::Serialize(TraceCategory::Cat20000000));
+    EXPECT_EQ("Cat10000000", serialization::Serialize(TraceCategory::Cat10000000));
+    EXPECT_EQ("Cat08000000", serialization::Serialize(TraceCategory::Cat08000000));
+    EXPECT_EQ("Cat04000000", serialization::Serialize(TraceCategory::Cat04000000));
+    EXPECT_EQ("Cat02000000", serialization::Serialize(TraceCategory::Cat02000000));
+    EXPECT_EQ("Cat01000000", serialization::Serialize(TraceCategory::Cat01000000));
+    EXPECT_EQ("Cat00800000", serialization::Serialize(TraceCategory::Cat00800000));
+    EXPECT_EQ("Cat00400000", serialization::Serialize(TraceCategory::Cat00400000));
+    EXPECT_EQ("Cat00200000", serialization::Serialize(TraceCategory::Cat00200000));
+    EXPECT_EQ("Cat00100000", serialization::Serialize(TraceCategory::Cat00100000));
+    EXPECT_EQ("Cat00080000", serialization::Serialize(TraceCategory::Cat00080000));
+    EXPECT_EQ("Cat00040000", serialization::Serialize(TraceCategory::Cat00040000));
+    EXPECT_EQ("Cat00020000", serialization::Serialize(TraceCategory::Cat00020000));
+    EXPECT_EQ("Cat00010000", serialization::Serialize(TraceCategory::Cat00010000));
+    EXPECT_EQ("Cat00008000", serialization::Serialize(TraceCategory::Cat00008000));
+    EXPECT_EQ("Cat00004000", serialization::Serialize(TraceCategory::Cat00004000));
+    EXPECT_EQ("Cat00002000", serialization::Serialize(TraceCategory::Cat00002000));
+    EXPECT_EQ("Cat00001000", serialization::Serialize(TraceCategory::Cat00001000));
+    EXPECT_EQ("Cat00000800", serialization::Serialize(TraceCategory::Cat00000800));
+    EXPECT_EQ("Cat00000400", serialization::Serialize(TraceCategory::Cat00000400));
+    EXPECT_EQ("Cat00000200", serialization::Serialize(TraceCategory::Cat00000200));
+    EXPECT_EQ("Cat00000100", serialization::Serialize(TraceCategory::Cat00000100));
+    EXPECT_EQ("Cat00000080", serialization::Serialize(TraceCategory::Cat00000080));
+    EXPECT_EQ("Enter",       serialization::Serialize(TraceCategory::FunctionEnter));
+    EXPECT_EQ("Leave",       serialization::Serialize(TraceCategory::FunctionLeave));
+    EXPECT_EQ("Debug",       serialization::Serialize(TraceCategory::Debug));
+    EXPECT_EQ("Information", serialization::Serialize(TraceCategory::Information));
+    EXPECT_EQ("Warning",     serialization::Serialize(TraceCategory::Warning));
+    EXPECT_EQ("Error",       serialization::Serialize(TraceCategory::Error));
+    EXPECT_EQ("Fatal",       serialization::Serialize(TraceCategory::Fatal));
 }
 
 TEST(TraceCategoryTest, EnumTraceCategories)
 {
     std::vector<TraceCategory> expected = { 
+        TraceCategory::Fatal,
+        TraceCategory::Error,
+        TraceCategory::Warning,
+        TraceCategory::Information,
         TraceCategory::Debug,
-        TraceCategory::Flow,
-        TraceCategory::Data,
-        TraceCategory::Cat00000008,
-        TraceCategory::Cat00000010,
-        TraceCategory::Cat00000020,
-        TraceCategory::Cat00000040,
+        TraceCategory::FunctionLeave,
+        TraceCategory::FunctionEnter,
         TraceCategory::Cat00000080,
         TraceCategory::Cat00000100,
         TraceCategory::Cat00000200,
         TraceCategory::Cat00000400,
-        TraceCategory::ResultFlow,
+        TraceCategory::Cat00000800,
         TraceCategory::Cat00001000,
-        TraceCategory::StartupShutdown,
-        TraceCategory::BitfieldDriver,
-        TraceCategory::SscfCan,
-        TraceCategory::BistPostInfo,
-        TraceCategory::Interrupt,
-        TraceCategory::Log,
-        TraceCategory::Information,
-        TraceCategory::CanNmtDbt,
-        TraceCategory::FunctionLeave,
-        TraceCategory::FunctionEnter,
-        TraceCategory::PipelineIn,
-        TraceCategory::ControlLayer,
-        TraceCategory::ApplicationLayer,
-        TraceCategory::Physical,
-        TraceCategory::DriverLayer,
-        TraceCategory::SscfLib,
-        TraceCategory::SscfEvent,
-        TraceCategory::SscfEnd,
-        TraceCategory::SscfBegin,
+        TraceCategory::Cat00002000,
+        TraceCategory::Cat00004000,
+        TraceCategory::Cat00008000,
+        TraceCategory::Cat00010000,
+        TraceCategory::Cat00020000,
+        TraceCategory::Cat00040000,
+        TraceCategory::Cat00080000,
+        TraceCategory::Cat00100000,
+        TraceCategory::Cat00200000,
+        TraceCategory::Cat00400000,
+        TraceCategory::Cat00800000,
+        TraceCategory::Cat01000000,
+        TraceCategory::Cat02000000,
+        TraceCategory::Cat04000000,
+        TraceCategory::Cat08000000,
+        TraceCategory::Cat10000000,
+        TraceCategory::Cat20000000,
+        TraceCategory::Cat40000000,
+        TraceCategory::Cat80000000,
     };
     EXPECT_EQ(expected, EnumTraceCategories());
 }

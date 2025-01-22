@@ -49,11 +49,9 @@ private:
 };
 
 using ScopedTracing = ScopedTracingGeneric<TraceCategory::FunctionEnter, TraceCategory::FunctionLeave>;
-using SSCFScopedTracing = ScopedTracingGeneric<TraceCategory::SscfBegin, TraceCategory::SscfEnd>;
 
 #define TOKENPASTE(x, y) x ## y
 #define TOKENPASTE2(x, y) TOKENPASTE(x, y)
 #define SCOPEDTRACE(entryFunction, exitFunction) ::tracing::ScopedTracing TOKENPASTE2(_trace, __LINE__)(__FILE__, __LINE__, __func__, entryFunction, exitFunction)
-#define SSCF_SCOPEDTRACE(entryFunction, exitFunction) ::tracing::SSCFScopedTracing TOKENPASTE2(_trace, __LINE__)(__FILE__, __LINE__, __func__, entryFunction, exitFunction)
 
 } // namespace tracing

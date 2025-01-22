@@ -64,7 +64,7 @@ TEST(CategorySetTest, ConstructMaskOnlyDebug)
     CategorySet<TraceCategory> set(0x00000001);
     for (auto const& category : EnumTraceCategories())
     {
-        if (category != TraceCategory::Debug)
+        if (category != TraceCategory::Fatal)
             EXPECT_FALSE(set.is_set(category));
         else
             EXPECT_TRUE(set.is_set(category));

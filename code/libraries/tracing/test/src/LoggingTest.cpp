@@ -83,7 +83,7 @@ TEST_F(LoggingTest, Log)
         m_logLineWriter.GetResult());
 
     CheckMatch(
-        { TraceRegexTimeStamp + "Log\\|MyFile\\:123\\|MyFunction\\|LoggingTest\\|Hello World" },
+        { TraceRegexTimeStamp + "Information\\|MyFile\\:123\\|MyFunction\\|LoggingTest\\|Hello World" },
         m_traceLineWriter.GetResult());
 }
 
@@ -95,7 +95,7 @@ TEST_F(LoggingTest, LogWithFormat)
         m_logLineWriter.GetResult());
 
     CheckMatch(
-        { TraceRegexTimeStamp + "Log\\|MyFile\\:123\\|MyFunction\\|LoggingTest\\|Hello World \\(C\\) 2020" },
+        { TraceRegexTimeStamp + "Information\\|MyFile\\:123\\|MyFunction\\|LoggingTest\\|Hello World \\(C\\) 2020" },
         m_traceLineWriter.GetResult());
 }
 

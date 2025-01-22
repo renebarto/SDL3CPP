@@ -42,7 +42,7 @@ namespace tracing {
 
     void Logging::Log(const std::string& path, int line, const std::string& functionName, const std::string& msg)
     {
-        Tracing::Trace(TraceCategory::Log, path, line, functionName, msg);
+        Tracing::Trace(TraceCategory::Information, path, line, functionName, msg);
         Lock guard(m_logMutex);
         auto clock = osal::Clock();
         std::string fileName = ExtractFileName(path);
