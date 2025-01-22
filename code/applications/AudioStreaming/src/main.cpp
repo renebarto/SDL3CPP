@@ -12,7 +12,7 @@ float phaseL = 0.0F;
 float phaseR = 0.0F;
 float sampleFreq = 48000.0F;
 float freqL = 1000.0F;
-float freqR = 4000.0F;
+float freqR = 2000.0F;
 float twoPI = 2 * SDL_PI_D;
 float stepL = freqL / sampleFreq * twoPI;
 float stepR = freqR / sampleFreq * twoPI;
@@ -21,15 +21,15 @@ float stepR = freqR / sampleFreq * twoPI;
 void audio_callback(void */*userdata*/, SDL_AudioStream *stream, int additional_amount, int total_amount)
 {
     size_t offset{};
-    int sampleFrames = additional_amount / 8;
+    int sampleFrames = additional_amount / 4;
     for (int i = 0; i < sampleFrames; ++i)
     {
-        float sampleL = sin(phaseL);
-        float sampleR = sin(phaseR);
-        memcpy(audioBuffer + offset, &sampleL, 4);
-        offset += 4;
-        memcpy(audioBuffer + offset, &sampleR, 4);
-        offset += 4;
+        int16_t sampleL = static_cast<int16_t>(32768.0F * sin(phaseL) + 0.5F);
+        int16_t sampleR = static_cast<int16_t>(32768.0F * sin(phaseR) + 0.5F);
+        memcpy(audioBuffer + offset, &sampleL, 2);
+        offset += 2;
+        memcpy(audioBuffer + offset, &sampleR, 2);
+        offset += 2;
         phaseL += stepL;
         phaseR += stepR;
         if (phaseL > twoPI)
@@ -38,7 +38,7 @@ void audio_callback(void */*userdata*/, SDL_AudioStream *stream, int additional_
             phaseR -= twoPI;
     }
     // Put the audio data into the stream
-    std::cout << "Get audio, size " << additional_amount << "\r\n";
+    //std::cout << "Get audio, size " << additional_amount << "\r\n";
     SDL_PutAudioStreamData(stream, audioBuffer, sampleFrames * 4);
 }
 
@@ -46,11 +46,12 @@ int main(int argc, char *argv[])
 {
     try
     {
+        memset(audioBuffer, 0, sizeof(audioBuffer));
         // Initialize SDL
         auto &sdl = GetSDL(SDLInitFlags::Audio);
 
         // Set the desired audio specification
-        AudioDeviceSpec desired_spec { AudioFormat::Float32LE, 2, 48000 };
+        AudioDeviceSpec desired_spec { AudioFormat::SInt16LE, 2, 48000 };
         // Signed 16 bit sample format
         // Two channels (stereo)
         // Sample rate 48000
