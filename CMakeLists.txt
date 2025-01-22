@@ -67,6 +67,7 @@ endif()
 set(IMAGE_DIR "${CMAKE_SOURCE_DIR}/images")
 set(FONT_DIR "${CMAKE_SOURCE_DIR}/fonts")
 set(SOUND_DIR "${CMAKE_SOURCE_DIR}/sound")
+set(ROM_DIR "${CMAKE_SOURCE_DIR}/rom")
 
 message(STATUS "Platform:            ${PLATFORM_NAME}")
 message(STATUS "Platform Windows:    ${PLATFORM_WINDOWS}")
@@ -114,7 +115,9 @@ macro(setup_default_options)
         set(DEFINES_C _CRT_SECURE_NO_WARNINGS _SCL_SECURE_NO_WARNINGS _WINSOCK_DEPRECATED_NO_WARNINGS WINVER=0x0A00 _WIN32_WINNT=0x0A00 PLATFORM_WINDOWS
             IMAGE_DIR="${IMAGE_DIR}"
             FONT_DIR="${FONT_DIR}"
-            SOUND_DIR="${SOUND_DIR}")
+            SOUND_DIR="${SOUND_DIR}"
+            ROM_DIR="${ROM_DIR}"
+            )
         if (USE_SDL2_IMAGE)
             list(APPEND DEFINES_C SDL2_WITH_IMAGE)
         endif()
