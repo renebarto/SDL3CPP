@@ -9,15 +9,16 @@
 #include "SDL3CPP/Surface.h"
 #include "SDL3CPP/Texture.h"
 #include "SDL3CPP/Window.h"
+#include "Controller/Controller.h"
+#include "Model/Model.h"
+#include "View/MainView.h"
 
 constexpr int ScreenBufferDepth = 2;
 
-class App
+class Application
 {
 private:
     tracing::CategorySet<tracing::TraceCategory> m_savedTraceFilter;
-    tracing::ConsoleTraceLineWriter m_lineWriter;
-    tracing::TraceWriter m_traceWriter;
 
     // The window we'll be rendering to
     SDL3CPP::Window m_window;
@@ -44,12 +45,18 @@ private:
     SDL3CPP::FRect m_zxSpectrumScreenRect;
     SDL3CPP::Color m_borderColor;
 
+    Model m_model;
+    MainView m_view;
+    Controller m_controller;
+
 public:
-    App();
-    virtual ~App();
+    Application();
+    virtual ~Application();
 
     // Starts up SDL and creates window
-    bool Init();
+    bool Init(tracing::TraceWriter* traceWriter);
+
+    void SetDebug(bool on);
 
     bool Run();
 

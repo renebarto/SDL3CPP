@@ -1,4 +1,4 @@
-#include "App.h"
+#include "Application.h"
 
 #include "SDL3CPP/Rect.h"
 #include "SDL3CPP/SDL.h"
@@ -14,10 +14,8 @@ static constexpr int ZXSpectrumScreenHeight = 192;
 static constexpr int ZXSpectrumScreenBorderWidth = 48;
 static constexpr int ZXSpectrumScreenBorderHeight = 48;
 
-App::App()
+Application::Application()
     : m_savedTraceFilter{}
-    , m_lineWriter{}
-    , m_traceWriter(m_lineWriter)
     , m_window{}
     , m_renderer{}
     , m_screenSurface{}
@@ -43,23 +41,34 @@ App::App()
         static_cast<float>(m_zxSpectrumScreenWidth),
         static_cast<float>(m_zxSpectrumScreenHeight) }
     , m_borderColor{}
+    , m_model{}
+    , m_view{ m_model }
+    , m_controller{ m_model, m_view }
 {
-    Tracing::SetTraceWriter(&m_traceWriter);
     m_savedTraceFilter = Tracing::GetDefaultTraceFilter();
     Tracing::SetDefaultTraceFilter(TraceCategory::All);
     TRACE_DEBUG("Construct");
 }
 
-App::~App()
+Application::~Application()
 {
     TRACE_DEBUG("Destruct");
 }
 
-bool App::Init()
+bool Application::Init(tracing::TraceWriter* traceWriter)
 {
     SCOPEDTRACE(nullptr, nullptr);
+
+    if (traceWriter)
+    {
+        Tracing::SetTraceWriter(traceWriter);
+    }
     // Initialization flag
-    bool success = true;
+    bool success = m_controller.Init();
+    if (!success)
+    {
+        return false;
+    }
 
     try
     {
@@ -111,7 +120,12 @@ bool App::Init()
     return success;
 }
 
-bool App::Run()
+void Application::SetDebug(bool on)
+{
+    m_controller.SetDebug(on);
+}
+
+bool Application::Run()
 {
     SCOPEDTRACE(nullptr, nullptr);
     Event e;
@@ -153,54 +167,20 @@ bool App::Run()
     return true;
 }
 
-bool App::HandleEvent(const Event &e)
+bool Application::HandleEvent(const Event &e)
 {
     if (e.Type() == SDL_EVENT_KEY_DOWN)
     {
-        switch (e.Key())
-        {
-        case SDLK_1:
-            TRACE_DEBUG("Set color red");
-            UpdateBuffer(0xFF, 0x00, 0x00);
-            break;
-
-        case SDLK_2:
-            TRACE_DEBUG("Set color green");
-            UpdateBuffer(0x00, 0xFF, 0x00);
-            break;
-
-        case SDLK_3:
-            TRACE_DEBUG("Set color blue");
-            UpdateBuffer(0x00, 0x00, 0xFF);
-            break;
-
-        case SDLK_4:
-            TRACE_DEBUG("Set border color red");
-            SetBorderColor(0xFF, 0x00, 0x00);
-            break;
-
-        case SDLK_5:
-            TRACE_DEBUG("Set border color green");
-            SetBorderColor(0x00, 0xFF, 0x00);
-            break;
-
-        case SDLK_6:
-            TRACE_DEBUG("Set border color blue");
-            SetBorderColor(0x00, 0x00, 0xFF);
-            break;
-
-        default:
-            break;
-        }
+        m_controller.OnKeyDown(e);
     }
     return true;
 }
 
-void App::Close()
+void Application::Close()
 {
 }
 
-bool App::Render()
+bool Application::Render()
 {
     // Clear screen
     m_renderer.SetDrawColor(0x0, 0x0, 0x0, 0xFF);
@@ -243,14 +223,14 @@ struct RGB
     uint8_t b;
 };
 
-void App::SetBorderColor(uint8_t r, uint8_t g, uint8_t b)
+void Application::SetBorderColor(uint8_t r, uint8_t g, uint8_t b)
 {
     m_borderColor.SetRed(r);
     m_borderColor.SetGreen(g);
     m_borderColor.SetBlue(b);
 }
 
-void App::UpdateBuffer(uint8_t r, uint8_t g, uint8_t b)
+void Application::UpdateBuffer(uint8_t r, uint8_t g, uint8_t b)
 {
     if (LockTexture())
     {
@@ -270,13 +250,13 @@ void App::UpdateBuffer(uint8_t r, uint8_t g, uint8_t b)
     }
 }
 
-void App::SetPixel(int x, int y, Color color)
+void Application::SetPixel(int x, int y, Color color)
 {
     RGB* imagePtr = reinterpret_cast<RGB *>(reinterpret_cast<uint8_t *>(m_imageData) + y * m_imagePitch) + x;
     *imagePtr++ = RGB{ color.r, color.g, color.b };
 }
 
-bool App::LockTexture()
+bool Application::LockTexture()
 {
     m_zxSpectumScreenBufferIndexForUpdate = (m_zxSpectumScreenBufferIndex + 1) % ScreenBufferDepth;
     auto &bufferTexture = m_zxSpectumScreenBuffer[m_zxSpectumScreenBufferIndexForUpdate];
@@ -287,7 +267,7 @@ bool App::LockTexture()
     return true;
 }
 
-bool App::UnlockTexture()
+bool Application::UnlockTexture()
 {
     m_zxSpectumScreenBufferIndexForUpdate = (m_zxSpectumScreenBufferIndex + 1) % ScreenBufferDepth;
     auto &bufferTexture = m_zxSpectumScreenBuffer[m_zxSpectumScreenBufferIndexForUpdate];

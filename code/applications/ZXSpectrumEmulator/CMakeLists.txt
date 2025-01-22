@@ -36,13 +36,34 @@ set(PROJECT_LIBS
     )
 
 set(PROJECT_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/App.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Application.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Controller/Controller.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Model/Model.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Model/ZXSpectrum.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Model/Z80.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Model/Z80Disassembler.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Model/Z80Registers.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/View/MainView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
     )
 
 set(PROJECT_INCLUDES_PUBLIC )
 set(PROJECT_INCLUDES_PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/App.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Application.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Controller/Controller.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Model/ICPU.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Model/IDebugger.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Model/IO.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Model/IOGeneric.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Model/ISystem.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Model/Memory.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Model/MemoryGeneric.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Model/Model.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Model/ZXSpectrum.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Model/Z80.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Model/Z80Disassembler.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Model/Z80Registers.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/View/MainView.h
     )
 
 if (CMAKE_VERBOSE_MAKEFILE)
