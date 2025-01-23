@@ -6,11 +6,11 @@
 // You must include the command line parameters for your main function to be recognized by SDL
 int main(int /*argc*/, char* /*argv*/[])
 {
+    tracing::ConsoleTraceLineWriter traceLineWriter{};
+    tracing::TraceWriter traceWriter{ traceLineWriter };
     try
     {
         Application app;
-        tracing::ConsoleTraceLineWriter traceLineWriter{};
-        tracing::TraceWriter traceWriter{ traceLineWriter };
 
         app.Init(&traceWriter);
 

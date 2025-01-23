@@ -1,10 +1,11 @@
 #include "Application.h"
 
+#include <ostream>
+#include "core/threading/Thread.h"
 #include "SDL3CPP/Rect.h"
 #include "SDL3CPP/SDL.h"
 #include "SDL3CPP/SDLImage.h"
 #include "tracing/ScopedTracing.h"
-#include <ostream>
 
 using namespace SDL3CPP;
 using namespace tracing;
@@ -13,6 +14,24 @@ static constexpr int ZXSpectrumScreenWidth = 256;
 static constexpr int ZXSpectrumScreenHeight = 192;
 static constexpr int ZXSpectrumScreenBorderWidth = 48;
 static constexpr int ZXSpectrumScreenBorderHeight = 48;
+
+class ZXSpectrumEmulatorThread
+    : public core::threading::TypedReturnThread<bool>
+{
+private:
+    Controller &m_controller;
+    
+public:
+    ZXSpectrumEmulatorThread(Controller &controller)
+        : core::threading::TypedReturnThread<bool>(std::bind(&Controller::Run, &controller))
+        , m_controller{ controller }
+    {
+    }
+    void Kill()
+    {
+        m_controller.Stop();
+    }
+};
 
 Application::Application()
     : m_savedTraceFilter{}
@@ -57,12 +76,11 @@ Application::~Application()
 
 bool Application::Init(tracing::TraceWriter* traceWriter)
 {
-    SCOPEDTRACE(nullptr, nullptr);
-
     if (traceWriter)
     {
         Tracing::SetTraceWriter(traceWriter);
     }
+    SCOPEDTRACE(nullptr, nullptr);
     // Initialization flag
     bool success = m_controller.Init();
     if (!success)
@@ -128,6 +146,10 @@ void Application::SetDebug(bool on)
 bool Application::Run()
 {
     SCOPEDTRACE(nullptr, nullptr);
+
+    m_controller.SetDebug(true);
+    ZXSpectrumEmulatorThread thread(m_controller);
+
     Event e;
     bool quit = false;
     while (quit == false)
@@ -164,7 +186,9 @@ bool Application::Run()
         if (!Render())
             return false;
     }
-    return true;
+    thread.Kill();
+    thread.WaitForDeath();
+    return thread.GetResult();
 }
 
 bool Application::HandleEvent(const Event &e)

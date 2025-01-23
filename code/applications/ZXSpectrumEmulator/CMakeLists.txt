@@ -29,6 +29,7 @@ set(PROJECT_DEPENDENCIES
 
 set(PROJECT_LIBS
     SDL3CPP
+    core
     tracing
     utility
     ${LINKER_LIBRARIES}

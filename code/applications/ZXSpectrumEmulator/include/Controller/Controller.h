@@ -1,5 +1,6 @@
 #pragma once
 
+#include "osal/synchronization/ManualEvent.h"
 #include "Controller/IKeyDown.h"
 #include "Model/ISystem.h"
 
@@ -16,7 +17,7 @@ private:
     bool m_debug;
     bool m_quit;
     SDL3CPP::Event m_keyDownEvent;
-    bool m_keyDownEventTrigger;
+    osal::ManualEvent m_keyDownEventTrigger;
 
 public:
     Controller(Model &model, MainView &view);

@@ -17,6 +17,7 @@
 #include <chrono>
 #include <condition_variable>
 #include <mutex>
+#include <ostream>
 #include "osal/utilities/TypeInfo.h"
 
 namespace osal {

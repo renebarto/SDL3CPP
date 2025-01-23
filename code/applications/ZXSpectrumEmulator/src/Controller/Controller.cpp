@@ -61,6 +61,7 @@ bool Controller::Run()
 void Controller::Stop()
 {
     m_quit = true;
+    m_keyDownEventTrigger.Set();
 }
 
 bool Controller::DoRun()
@@ -109,10 +110,8 @@ bool Controller::DoDebug()
 
 void Controller::WaitForInput()
 {
-    while (!m_keyDownEventTrigger)
-    {
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    }
+    m_keyDownEventTrigger.Wait();
+    m_keyDownEventTrigger.Reset();
 }
 
 void Controller::OnKeyDown(const SDL3CPP::Event &e)
@@ -120,6 +119,6 @@ void Controller::OnKeyDown(const SDL3CPP::Event &e)
     if (e.Type() == SDL_EVENT_KEY_DOWN)
     {
         m_keyDownEvent = e;
-        m_keyDownEventTrigger = true;
+        m_keyDownEventTrigger.Set();
     }
 }
