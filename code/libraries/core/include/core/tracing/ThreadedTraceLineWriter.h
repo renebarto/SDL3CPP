@@ -24,9 +24,9 @@ struct Entry
 {
 public:
     ::tracing::TraceCategory m_category;
-    StringType m_line;
+    std::string m_line;
 
-    Entry(::tracing::TraceCategory category, const StringType& line)
+    Entry(::tracing::TraceCategory category, const std::string& line)
         : m_category{ category }
         , m_line{ line }
     {}
@@ -45,7 +45,7 @@ public:
     ThreadedTraceLineWriter(::tracing::ITraceLineWriter& writer);
     ~ThreadedTraceLineWriter();
 
-    void WriteLine(::tracing::TraceCategory category, const StringType & line) override;
+    void WriteLine(::tracing::TraceCategory category, const std::string & line) override;
 
 protected:
     void InitThread()  override;

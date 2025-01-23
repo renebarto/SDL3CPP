@@ -20,7 +20,7 @@ namespace core {
 namespace tracing {
 
 ThreadedLogLineWriter::ThreadedLogLineWriter(::tracing::ILogLineWriter& writer)
-    : threading::ActiveObject{TX("LogLineWriter")}
+    : threading::ActiveObject{"LogLineWriter"}
     , m_writer{ writer }
     , m_buffer{}
     , m_stopThread{}
@@ -31,7 +31,7 @@ ThreadedLogLineWriter::~ThreadedLogLineWriter()
 {
 }
 
-void ThreadedLogLineWriter::WriteLine(const StringType & line)
+void ThreadedLogLineWriter::WriteLine(const std::string & line)
 {
     m_buffer.emplace_back(line);
 }

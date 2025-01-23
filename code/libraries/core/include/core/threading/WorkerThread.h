@@ -32,7 +32,7 @@ public:
     WorkerThread(const WorkerThread &) = delete;
     WorkerThread & operator = (const WorkerThread &) = delete;
 
-    explicit WorkerThread(const StringType & name)
+    explicit WorkerThread(const std::string & name)
         : core::threading::Thread(name)
         , m_birthEvent()
     {
@@ -70,15 +70,15 @@ protected:
     {
         try
         {
-            TraceInfo(__FILE__, __LINE__, __func__, TX("Thread {} starting"), GetName());
+            TraceInfo(__FILE__, __LINE__, __func__, "Thread {} starting", GetName());
             m_birthEvent.Set();
             Thread();
-            TraceInfo(__FILE__, __LINE__, __func__, TX("Thread {} stopping"), GetName());
+            TraceInfo(__FILE__, __LINE__, __func__, "Thread {} stopping", GetName());
             m_state = ThreadState::Finished;
         }
         catch (const std::exception & e)
         {
-            TraceInfo(__FILE__, __LINE__, __func__, TX("Thread {}: Exception thown: {}"), GetName(), ::Convert(e.what()));
+            TraceInfo(__FILE__, __LINE__, __func__, "Thread {}: Exception thown: {}", GetName(), e.what());
             m_birthEvent.Set();
             throw;
         }

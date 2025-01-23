@@ -28,7 +28,7 @@ public:
     bool m_isFlagged;
 
     MyWorkerThread()
-        : WorkerThread(TX("MyWorkerThread"))
+        : WorkerThread("MyWorkerThread")
         , m_isFlagged()
     {
         m_isDeleted = false;

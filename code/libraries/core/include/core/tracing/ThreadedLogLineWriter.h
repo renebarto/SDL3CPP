@@ -26,14 +26,14 @@ class ThreadedLogLineWriter
 {
 private:
     ::tracing::ILogLineWriter& m_writer;
-    std::deque<StringType> m_buffer;
+    std::deque<std::string> m_buffer;
     std::atomic_bool m_stopThread;
 
 public:
     ThreadedLogLineWriter(::tracing::ILogLineWriter& writer);
     ~ThreadedLogLineWriter();
 
-    void WriteLine(const StringType& line) override;
+    void WriteLine(const std::string& line) override;
 
 protected:
     void InitThread()  override;

@@ -25,7 +25,7 @@ class MyLogLineWriterSubscriber
     : public ::tracing::ILogLineWriter
 {
 public:
-    StringType m_buffer;
+    std::string m_buffer;
 
     MyLogLineWriterSubscriber()
         : m_buffer{}
@@ -35,10 +35,10 @@ public:
     {
     }
 
-    void WriteLine(const StringType& line) override
+    void WriteLine(const std::string& line) override
     {
         m_buffer += line;
-        m_buffer += TX('\n');
+        m_buffer += '\n';
     }
 };
 
@@ -46,7 +46,7 @@ class MultiSubscriberLogLineWriterTest
     : public ::testing::Test
 {
 public:
-    ::utility::EnumBitSet<::tracing::TraceCategory> m_savedTraceFilter;
+    ::tracing::CategorySet<::tracing::TraceCategory> m_savedTraceFilter;
     MyLogLineWriterSubscriber m_subscriber1;
     MyLogLineWriterSubscriber m_subscriber2;
 
@@ -68,20 +68,20 @@ public:
 TEST_F(MultiSubscriberLogLineWriterTest, NoSubscriptionNothingIsWritten)
 {
     MultiSubscriberLogLineWriter writer;
-    writer.WriteLine(TX("Hello"));
+    writer.WriteLine("Hello");
 
-    EXPECT_EQ(TX(""), m_subscriber1.m_buffer);
-    EXPECT_EQ(TX(""), m_subscriber2.m_buffer);
+    EXPECT_EQ("", m_subscriber1.m_buffer);
+    EXPECT_EQ("", m_subscriber2.m_buffer);
 }
 
 TEST_F(MultiSubscriberLogLineWriterTest, SingleSubscription)
 {
     MultiSubscriberLogLineWriter writer;
     writer.Subscribe(&m_subscriber1);
-    writer.WriteLine(TX("Hello"));
+    writer.WriteLine("Hello");
 
-    EXPECT_EQ(TX("Hello\n"), m_subscriber1.m_buffer);
-    EXPECT_EQ(TX(""), m_subscriber2.m_buffer);
+    EXPECT_EQ("Hello\n", m_subscriber1.m_buffer);
+    EXPECT_EQ("", m_subscriber2.m_buffer);
 }
 
 TEST_F(MultiSubscriberLogLineWriterTest, MultipleSubscription)
@@ -89,10 +89,10 @@ TEST_F(MultiSubscriberLogLineWriterTest, MultipleSubscription)
     MultiSubscriberLogLineWriter writer;
     writer.Subscribe(&m_subscriber1);
     writer.Subscribe(&m_subscriber2);
-    writer.WriteLine(TX("Hello"));
+    writer.WriteLine("Hello");
 
-    EXPECT_EQ(TX("Hello\n"), m_subscriber1.m_buffer);
-    EXPECT_EQ(TX("Hello\n"), m_subscriber2.m_buffer);
+    EXPECT_EQ("Hello\n", m_subscriber1.m_buffer);
+    EXPECT_EQ("Hello\n", m_subscriber2.m_buffer);
 }
 
 TEST_F(MultiSubscriberLogLineWriterTest, MultipleSubscriptionSame)
@@ -100,10 +100,10 @@ TEST_F(MultiSubscriberLogLineWriterTest, MultipleSubscriptionSame)
     MultiSubscriberLogLineWriter writer;
     writer.Subscribe(&m_subscriber1);
     writer.Subscribe(&m_subscriber1);
-    writer.WriteLine(TX("Hello"));
+    writer.WriteLine("Hello");
 
-    EXPECT_EQ(TX("Hello\n"), m_subscriber1.m_buffer);
-    EXPECT_EQ(TX(""), m_subscriber2.m_buffer);
+    EXPECT_EQ("Hello\n", m_subscriber1.m_buffer);
+    EXPECT_EQ("", m_subscriber2.m_buffer);
 }
 
 } // namespace tracing

@@ -20,7 +20,7 @@ namespace core {
 namespace tracing {
 
 ThreadedTraceLineWriter::ThreadedTraceLineWriter(::tracing::ITraceLineWriter& writer)
-    : threading::ActiveObject{TX("TraceLineWriter")}
+    : threading::ActiveObject{"TraceLineWriter"}
     , m_writer{ writer }
     , m_buffer{}
     , m_stopThread{}
@@ -31,7 +31,7 @@ ThreadedTraceLineWriter::~ThreadedTraceLineWriter()
 {
 }
 
-void ThreadedTraceLineWriter::WriteLine(::tracing::TraceCategory category, const StringType & line)
+void ThreadedTraceLineWriter::WriteLine(::tracing::TraceCategory category, const std::string & line)
 {
     m_buffer.emplace_back(category, line);
 }

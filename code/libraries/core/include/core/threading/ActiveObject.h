@@ -34,7 +34,7 @@ public:
     ActiveObject(const ActiveObject &) = delete;
     ActiveObject & operator = (const ActiveObject &) = delete;
 
-    ActiveObject(const StringType & name)
+    ActiveObject(const std::string & name)
         : WorkerThread(name)
         , m_isDying(false)
         , m_isAlive(false)
@@ -53,11 +53,11 @@ public:
         {
             m_isDying = true;
 
-            TraceInfo(__FILE__, __LINE__, __func__, TX("Signaling thread to shut down"));
+            TraceInfo(__FILE__, __LINE__, __func__, "Signaling thread to shut down");
 
             FlushThread();
 
-            TraceInfo(__FILE__, __LINE__, __func__, TX("Waiting for thread to shut down"));
+            TraceInfo(__FILE__, __LINE__, __func__, "Waiting for thread to shut down");
 
             WorkerThread::WaitForDeath();
             WorkerThread::Destroy();
@@ -73,13 +73,13 @@ public:
     bool IsAlive() const
     {
         bool result = m_isAlive;
-        SCOPEDTRACE(nullptr, [&] () { return utility::FormatString(TX("result={}"), result); });
+        SCOPEDTRACE(nullptr, [&] () { return utility::FormatString("result={}", result); });
         return result;
     }
     bool IsDying() const
     {
         bool result = m_isDying;
-        SCOPEDTRACE(nullptr, [&] () { return utility::FormatString(TX("result={}"), result); });
+        SCOPEDTRACE(nullptr, [&] () { return utility::FormatString("result={}", result); });
         return result;
     }
     using WorkerThread::GetName;
@@ -94,17 +94,17 @@ protected:
         {
             m_isAlive = true;
 
-            TraceInfo(__FILE__, __LINE__, __func__, TX("Thread {} starting"), GetName());
+            TraceInfo(__FILE__, __LINE__, __func__, "Thread {} starting", GetName());
 
             InitThread();
             Run();
             ExitThread();
 
-            TraceInfo(__FILE__, __LINE__, __func__, TX("Thread {} shutting down"), GetName());
+            TraceInfo(__FILE__, __LINE__, __func__, "Thread {} shutting down", GetName());
         }
         catch (const std::exception & e)
         {
-            TraceInfo(__FILE__, __LINE__, __func__, TX("Thread {}: Exception thown: {}"), GetName(), ::Convert(e.what()));
+            TraceInfo(__FILE__, __LINE__, __func__, "Thread {}: Exception thown: {}", GetName(), e.what());
             m_isAlive = false;
             throw;
         }

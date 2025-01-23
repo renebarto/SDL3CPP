@@ -37,14 +37,14 @@ public:
     Element * operator ->()
     {
         if ((m_current < m_begin) || (m_current >= m_end))
-            tracing::Tracing::Throw(__FILE__, __LINE__, __FUNCTION__, utility::GenericError(TX("Iterator outside range")));
+            tracing::Tracing::Throw(__FILE__, __LINE__, __FUNCTION__, utility::GenericError("Iterator outside range"));
 
         return m_current;
     }
     Element & operator *()
     {
         if ((m_current < m_begin) || (m_current >= m_end))
-            tracing::Tracing::Throw(__FILE__, __LINE__, __FUNCTION__, utility::GenericError(TX("Iterator outside range")));
+            tracing::Tracing::Throw(__FILE__, __LINE__, __FUNCTION__, utility::GenericError("Iterator outside range"));
 
         return *m_current;
     }
@@ -86,14 +86,14 @@ public:
     const Element * operator ->()
     {
         if ((m_current < m_begin) || (m_current >= m_end))
-            tracing::Tracing::Throw(__FILE__, __LINE__, __FUNCTION__, utility::GenericError(TX("Iterator outside range")));
+            tracing::Tracing::Throw(__FILE__, __LINE__, __FUNCTION__, utility::GenericError("Iterator outside range"));
 
         return m_current;
     }
     const Element & operator *() const
     {
         if ((m_current < m_begin) || (m_current >= m_end))
-            tracing::Tracing::Throw(__FILE__, __LINE__, __FUNCTION__, utility::GenericError(TX("Iterator outside range")));
+            tracing::Tracing::Throw(__FILE__, __LINE__, __FUNCTION__, utility::GenericError("Iterator outside range"));
 
         return *m_current;
     }

@@ -29,7 +29,7 @@ public:
     static bool m_isDeleted;
 
     MyActiveObject()
-        : ActiveObject(TX("ActiveObjTst1"))
+        : ActiveObject("ActiveObjTst1")
     {
         m_isDeleted = false;
     }
@@ -52,7 +52,7 @@ public:
     static bool m_isDeleted;
 
     MyActiveObject2()
-        : ActiveObject(TX("ActiveObjTst2"))
+        : ActiveObject("ActiveObjTst2")
     {
         m_isDeleted = false;
     }
@@ -80,7 +80,7 @@ class ActiveObjectTest
     : public ::testing::Test
 {
 public:
-    ::utility::EnumBitSet<tracing::TraceCategory> m_savedTraceFilter;
+    ::tracing::CategorySet<tracing::TraceCategory> m_savedTraceFilter;
 
     ActiveObjectTest()
         : m_savedTraceFilter()

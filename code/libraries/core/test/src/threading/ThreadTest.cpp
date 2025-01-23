@@ -22,12 +22,12 @@ namespace core {
 namespace threading {
 
 static const auto SLEEP = std::chrono::milliseconds(50);
-static const StringType ThreadName = TX("MyThread");
+static const std::string ThreadName = "MyThread";
 
 class ThreadTest : public ::testing::Test
 {
 public:
-    ::utility::EnumBitSet<tracing::TraceCategory> m_savedTraceFilter;
+    ::tracing::CategorySet<tracing::TraceCategory> m_savedTraceFilter;
 
     ThreadTest()
         : m_savedTraceFilter()
@@ -59,7 +59,7 @@ TEST_F(ThreadTest, Construction)
     EXPECT_FALSE(thread.IsAlive());
     EXPECT_FALSE(thread.IsRunning());
     EXPECT_FALSE(thread.IsFinished());
-    EXPECT_EQ(TX(""), thread.GetName());
+    EXPECT_EQ("", thread.GetName());
     thread.WaitForDeath();
     EXPECT_FALSE(thread.IsAlive());
     EXPECT_FALSE(thread.IsRunning());
@@ -91,14 +91,14 @@ TEST_F(ThreadTest, ConstructionFunction)
     EXPECT_TRUE(thread.IsAlive());
     EXPECT_TRUE(thread.IsRunning());
     EXPECT_FALSE(thread.IsFinished());
-    EXPECT_EQ(TX(""), thread.GetName());
+    EXPECT_EQ("", thread.GetName());
     std::this_thread::sleep_for(SLEEP);
     thread.WaitForDeath();
     EXPECT_FALSE(thread.IsAlive());
     EXPECT_FALSE(thread.IsRunning());
     EXPECT_TRUE(thread.IsFinished());
     EXPECT_TRUE(thread.HasDied());
-    EXPECT_EQ(TX(""), thread.GetName());
+    EXPECT_EQ("", thread.GetName());
     EXPECT_TRUE(thread.HaveResult());
     EXPECT_NO_THROW(thread.GetResult());
 }
@@ -123,7 +123,7 @@ TEST_F(ThreadTest, ConstructionFunctionName)
 
 TEST_F(ThreadTest, GetSetName)
 {
-    const StringType AltName = TX("Thread");
+    const std::string AltName = "Thread";
     Thread thread(ThreadName);
     EXPECT_EQ(ThreadName, thread.GetName());
     thread.Create(TestThread);
@@ -192,24 +192,24 @@ TEST_F(ThreadTest, CrashingThread)
     EXPECT_THROW(thread.GetResult(), std::runtime_error);
 }
 
-StringType HelperThread()
+std::string HelperThread()
 {
     std::this_thread::sleep_for(std::chrono::seconds(1));
     return osal::GetThreadNameSelf();
 }
 TEST_F(ThreadTest, GetNamesOfMultipleThreads)
 {
-    osal::SetThreadNameSelf(TX("Main"));
+    osal::SetThreadNameSelf("Main");
 
-    const StringType helperThreadName = TX("HelperThread");
-    core::threading::TypedReturnThread<StringType> helperThread(HelperThread, helperThreadName);
+    const std::string helperThreadName = "HelperThread";
+    core::threading::TypedReturnThread<std::string> helperThread(HelperThread, helperThreadName);
     EXPECT_EQ(helperThreadName, helperThread.GetName());
 
     helperThread.WaitForDeath();
     auto result = helperThread.GetResult();
    
     EXPECT_EQ(helperThreadName, result);
-    EXPECT_EQ(TX("Main"), osal::GetThreadNameSelf());
+    EXPECT_EQ("Main", osal::GetThreadNameSelf());
 }
 
 } // namespace threading

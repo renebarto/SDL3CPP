@@ -38,7 +38,7 @@ public:
     void WriteLine(const std::string& line) override
     {
         m_buffer += line;
-        m_buffer += TX('\n');
+        m_buffer += '\n';
     }
 };
 
@@ -46,7 +46,7 @@ class ThreadedLogLineWriterTest
     : public ::testing::Test
 {
 public:
-    ::utility::EnumBitSet<::tracing::TraceCategory> m_savedTraceFilter;
+    ::tracing::CategorySet<::tracing::TraceCategory> m_savedTraceFilter;
     MyLogLineWriter m_writer;
 
     ThreadedLogLineWriterTest()
@@ -67,19 +67,19 @@ public:
 TEST_F(ThreadedLogLineWriterTest, WriteThreadNotRunning)
 {
     ThreadedLogLineWriter writer(m_writer);
-    writer.WriteLine(TX("Hello"));
+    writer.WriteLine("Hello");
 
-    EXPECT_EQ(TX(""), m_writer.m_buffer);
+    EXPECT_EQ("", m_writer.m_buffer);
 }
 
 TEST_F(ThreadedLogLineWriterTest, WriteThreadRunning)
 {
     ThreadedLogLineWriter writer(m_writer);
     writer.Create();
-    writer.WriteLine(TX("Hello"));
+    writer.WriteLine("Hello");
     writer.Kill();
 
-    EXPECT_EQ(TX("Hello\n"), m_writer.m_buffer);
+    EXPECT_EQ("Hello\n", m_writer.m_buffer);
 }
 
 } // namespace tracing
