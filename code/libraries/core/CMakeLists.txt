@@ -71,6 +71,7 @@ set(PROJECT_INCLUDES_PUBLIC
     include/core/tracing/ThreadedTraceLineWriter.h
     include/core/utilities/Exception.h
     include/core/utilities/Iterator.h
+    include/core/utilities/Singleton.h
     )
 
 if (CMAKE_VERBOSE_MAKEFILE)

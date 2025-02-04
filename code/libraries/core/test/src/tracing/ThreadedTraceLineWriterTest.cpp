@@ -45,7 +45,7 @@ class ThreadedTraceLineWriterTest
     : public ::testing::Test
 {
 public:
-    ::tracing::CategorySet<::tracing::TraceCategory> m_savedTraceFilter;
+    ::utility::EnumBitSet<::tracing::TraceCategory> m_savedTraceFilter;
     MyTraceLineWriter m_writer;
 
     ThreadedTraceLineWriterTest()

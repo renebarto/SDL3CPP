@@ -80,7 +80,7 @@ class ActiveObjectTest
     : public ::testing::Test
 {
 public:
-    ::tracing::CategorySet<tracing::TraceCategory> m_savedTraceFilter;
+    ::utility::EnumBitSet<tracing::TraceCategory> m_savedTraceFilter;
 
     ActiveObjectTest()
         : m_savedTraceFilter()

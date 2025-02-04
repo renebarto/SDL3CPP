@@ -45,7 +45,7 @@ class MultiSubscriberTraceLineWriterTest
     : public ::testing::Test
 {
 public:
-    ::tracing::CategorySet<::tracing::TraceCategory> m_savedTraceFilter;
+    ::utility::EnumBitSet<::tracing::TraceCategory> m_savedTraceFilter;
     MyTraceLineWriterSubscriber m_subscriber1;
     MyTraceLineWriterSubscriber m_subscriber2;
 

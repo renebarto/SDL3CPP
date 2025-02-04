@@ -27,7 +27,7 @@ static const std::string ThreadName = "MyThread";
 class ThreadTest : public ::testing::Test
 {
 public:
-    ::tracing::CategorySet<tracing::TraceCategory> m_savedTraceFilter;
+    ::utility::EnumBitSet<tracing::TraceCategory> m_savedTraceFilter;
 
     ThreadTest()
         : m_savedTraceFilter()
