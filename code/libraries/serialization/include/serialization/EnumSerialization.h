@@ -36,7 +36,14 @@ public:
     }
     static std::string Serialize(EnumType value)
     {
-        return ConversionMap[value];
+        try
+        {
+            return ConversionMap[value];
+        }
+        catch (std::runtime_error &)
+        {
+        }
+        return "Undefined";
     }
     static bool Deserialize(const std::string& text, EnumType& value)
     {
