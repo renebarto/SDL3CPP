@@ -13,12 +13,12 @@ float phaseR = 0.0F;
 float sampleFreq = 48000.0F;
 float freqL = 1000.0F;
 float freqR = 2000.0F;
-float twoPI = 2 * SDL_PI_D;
+float twoPI = 2 * SDL_PI_F;
 float stepL = freqL / sampleFreq * twoPI;
 float stepR = freqR / sampleFreq * twoPI;
 
 // Audio callback function
-void audio_callback(void */*userdata*/, SDL_AudioStream *stream, int additional_amount, int total_amount)
+void audio_callback(void */*userdata*/, SDL_AudioStream *stream, int additional_amount, int /*total_amount*/)
 {
     size_t offset{};
     int sampleFrames = additional_amount / 4;
@@ -42,13 +42,13 @@ void audio_callback(void */*userdata*/, SDL_AudioStream *stream, int additional_
     SDL_PutAudioStreamData(stream, audioBuffer, sampleFrames * 4);
 }
 
-int main(int argc, char *argv[])
+int main(int /*argc*/, char */*argv*/[])
 {
     try
     {
         memset(audioBuffer, 0, sizeof(audioBuffer));
         // Initialize SDL
-        auto &sdl = GetSDL(SDLInitFlags::Audio);
+        /*auto &sdl =*/ GetSDL(SDLInitFlags::Audio);
 
         // Set the desired audio specification
         AudioDeviceSpec desired_spec { AudioFormat::SInt16LE, 2, 48000 };
@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
 
         // Keep the application running to hear the audio
         std::cout << "Press Enter to quit...\n";
-        getchar();
+        (void)getchar();
     }
     catch (std::exception &e)
     {
