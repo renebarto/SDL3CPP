@@ -44,7 +44,10 @@ set(PROJECT_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Model/Z80.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Model/Z80Disassembler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Model/Z80Registers.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/View/Button.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/View/MainView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/View/UI.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/View/UIElement.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
     )
 
@@ -64,7 +67,10 @@ set(PROJECT_INCLUDES_PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include/Model/Z80.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/Model/Z80Disassembler.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/Model/Z80Registers.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/View/Button.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/View/MainView.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/View/UI.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/View/UIElement.h
     )
 
 if (CMAKE_VERBOSE_MAKEFILE)

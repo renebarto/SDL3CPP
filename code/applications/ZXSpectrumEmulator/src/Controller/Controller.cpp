@@ -3,18 +3,34 @@
 #include <filesystem>
 #include <fstream>
 #include <thread>
-
+#include "core/threading/Thread.h"
+#include <SDL3/SDL_keycode.h>
 #include "Model/ZXSpectrum.h"
 #include "View/MainView.h"
+
+class ZXSpectrumEmulatorThread
+    : public core::threading::TypedReturnThread<bool>
+{
+private:
+    Controller &m_controller;
+    
+public:
+    ZXSpectrumEmulatorThread(Controller &controller)
+        : core::threading::TypedReturnThread<bool>(std::bind(&Controller::Thread, &controller))
+        , m_controller{ controller }
+    {
+    }
+    void Kill()
+    {
+        m_controller.Stop();
+    }
+};
 
 Controller::Controller(Model& model, MainView& view)
     : m_model{model}
     , m_mainView{view}
     , m_system{}
     , m_debug{}
-    , m_quit{}
-    , m_keyDownEvent{}
-    , m_keyDownEventTrigger{}
 {
 }
 
@@ -37,12 +53,11 @@ bool Controller::Init()
 
     if (result)
     {
-        m_quit = false;
         result = m_system->Init();
     }
     if (result)
     {
-        m_mainView.Init(m_system);
+        result = m_mainView.Init(m_system);
     }
     return result;
 }
@@ -54,19 +69,24 @@ void Controller::SetDebug(bool on)
 
 bool Controller::Run()
 {
-    m_quit = false;
-    return m_debug ? DoDebug() : DoRun();
+    ZXSpectrumEmulatorThread thread(*this);
+
+    bool result = m_mainView.Run();
+    thread.Kill();
+    thread.WaitForDeath();
+    if (!result)
+        return false;
+    return thread.GetResult();
 }
 
-void Controller::Stop()
+bool Controller::Thread()
 {
-    m_quit = true;
-    m_keyDownEventTrigger.Set();
+    return m_debug ? DoDebug() : DoRun();
 }
 
 bool Controller::DoRun()
 {
-    while (!m_system->IsHalted() && !m_quit)
+    while (!m_system->IsHalted() && !m_mainView.Quit())
     {
         bool ok = m_system->ProcessInstruction();
         if (!ok)
@@ -86,7 +106,7 @@ bool Controller::DoDebug()
     TRACE_INFO("Initial state");
     m_mainView.ShowCPUClock();
     m_mainView.ShowRegisters();
-    while (!m_system->IsHalted() && !m_quit)
+    while (!m_system->IsHalted() && !m_mainView.Quit())
     {
         std::string mnemonic;
         bool ok = m_system->Disassemble(mnemonic);
@@ -110,15 +130,12 @@ bool Controller::DoDebug()
 
 void Controller::WaitForInput()
 {
-    m_keyDownEventTrigger.Wait();
-    m_keyDownEventTrigger.Reset();
+    m_mainView.WaitForInput();
 }
 
-void Controller::OnKeyDown(const SDL3CPP::Event &e)
+void Controller::Stop()
 {
-    if (e.Type() == SDL_EVENT_KEY_DOWN)
-    {
-        m_keyDownEvent = e;
-        m_keyDownEventTrigger.Set();
-    }
+    m_mainView.Stop();
 }
+
+
