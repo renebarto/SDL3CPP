@@ -66,6 +66,7 @@ endif()
 
 set(IMAGE_DIR "${CMAKE_SOURCE_DIR}/images")
 set(FONT_DIR "${CMAKE_SOURCE_DIR}/fonts")
+set(STOCK_FONT_DIR "C:/Windows/fonts")
 set(SOUND_DIR "${CMAKE_SOURCE_DIR}/sound")
 set(ROM_DIR "${CMAKE_SOURCE_DIR}/rom")
 
@@ -115,6 +116,7 @@ macro(setup_default_options)
         set(DEFINES_C _CRT_SECURE_NO_WARNINGS _SCL_SECURE_NO_WARNINGS _WINSOCK_DEPRECATED_NO_WARNINGS WINVER=0x0A00 _WIN32_WINNT=0x0A00 PLATFORM_WINDOWS
             IMAGE_DIR="${IMAGE_DIR}"
             FONT_DIR="${FONT_DIR}"
+            STOCK_FONT_DIR="${STOCK_FONT_DIR}"
             SOUND_DIR="${SOUND_DIR}"
             ROM_DIR="${ROM_DIR}"
             )
@@ -327,4 +329,4 @@ endif()
 add_subdirectory(${CMAKE_SOURCE_DIR}/externals/googletest/googletest-release-1.10.0 gtest_binary_dir)
 
 add_subdirectory(code)
-add_subdirectory(tutorials_original)
+#add_subdirectory(tutorials_original)

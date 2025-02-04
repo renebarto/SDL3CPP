@@ -2,6 +2,7 @@ message(STATUS "\n**************************************************************
 message(STATUS "\n## In directory: ${CMAKE_CURRENT_SOURCE_DIR}")
 
 add_subdirectory(SDL3CPP)
+add_subdirectory(SDLWindows)
 add_subdirectory(test-platform)
 add_subdirectory(serialization)
 add_subdirectory(osal)

@@ -10,7 +10,7 @@
             "installRoot": "${projectDir}\\output\\install\\${name}",
             "buildCommandArgs": "",
             "ctestCommandArgs": "",
-            "cmakeCommandArgs": "-DVERBOSE_BUILD=ON -DCMAKE_BUILD_TYPE=Debug -DMSI_NUMBER=\"1.2.3.4\" -DCMAKE_PREFIX_PATH=D:/Projects/SDL/SDL3/install/release -DINSTALL_GTEST=OFF -DBUILD_SHARED_LIBS=OFF -Dgtest_force_shared_crt=OFF"
+            "cmakeCommandArgs": "-DVERBOSE_BUILD=ON -DMSI_NUMBER=\"1.2.3.4\" -DCMAKE_PREFIX_PATH=D:/Projects/SDL/SDL3/install/release -DINSTALL_GTEST=OFF -DBUILD_SHARED_LIBS=OFF -Dgtest_force_shared_crt=OFF"
         },
         {
             "name": "x64-Release",
@@ -21,7 +21,7 @@
             "installRoot": "${projectDir}\\output\\install\\${name}",
             "buildCommandArgs": "",
             "ctestCommandArgs": "",
-            "cmakeCommandArgs": "-DVERBOSE_BUILD=ON -DCMAKE_BUILD_TYPE=Debug -DMSI_NUMBER=\"1.2.3.4\" -DCMAKE_PREFIX_PATH=D:/Projects/SDL/SDL3/install/release -DINSTALL_GTEST=OFF -DBUILD_SHARED_LIBS=OFF -Dgtest_force_shared_crt=OFF"
+            "cmakeCommandArgs": "-DVERBOSE_BUILD=ON -DMSI_NUMBER=\"1.2.3.4\" -DCMAKE_PREFIX_PATH=D:/Projects/SDL/SDL3/install/release -DINSTALL_GTEST=OFF -DBUILD_SHARED_LIBS=OFF -Dgtest_force_shared_crt=OFF"
         }
     ]
 }

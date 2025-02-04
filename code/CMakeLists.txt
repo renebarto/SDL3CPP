@@ -3,4 +3,4 @@ message(STATUS "\n## In directory: ${CMAKE_CURRENT_SOURCE_DIR}")
 
 add_subdirectory(applications)
 add_subdirectory(libraries)
-add_subdirectory(examples)
+#add_subdirectory(examples)
