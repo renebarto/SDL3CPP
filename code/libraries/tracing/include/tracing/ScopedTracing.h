@@ -52,6 +52,10 @@ using ScopedTracing = ScopedTracingGeneric<TraceCategory::FunctionEnter, TraceCa
 
 #define TOKENPASTE(x, y) x ## y
 #define TOKENPASTE2(x, y) TOKENPASTE(x, y)
+#ifdef _MSC_VER
+#define SCOPEDTRACE(entryFunction, exitFunction) ::tracing::ScopedTracing TOKENPASTE2(_trace, __LINE__)(__FILE__, __LINE__, __FUNCSIG__, entryFunction, exitFunction)
+#else
 #define SCOPEDTRACE(entryFunction, exitFunction) ::tracing::ScopedTracing TOKENPASTE2(_trace, __LINE__)(__FILE__, __LINE__, __func__, entryFunction, exitFunction)
+#endif
 
 } // namespace tracing

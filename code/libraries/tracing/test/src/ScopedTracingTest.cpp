@@ -36,7 +36,7 @@ static void CheckMatch(const std::vector<std::string>& regexStrings, const std::
 class ScopedTracingTest : public ::testing::Test
 {
 public:
-    CategorySet<TraceCategory> m_savedTraceFilter;
+    utility::EnumBitSet<TraceCategory> m_savedTraceFilter;
     StringTraceLineWriter m_lineWriter;
     TraceWriter m_traceWriter;
 

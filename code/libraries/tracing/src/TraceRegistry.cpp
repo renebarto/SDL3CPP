@@ -18,6 +18,8 @@
 #include "tracing/TraceRegistryItem.h"
 #include "tracing/ITraceRegistryUpdateListener.h"
 
+using namespace utility;
+
 namespace tracing {
 
 TraceRegistry::TraceRegistry()
@@ -31,7 +33,7 @@ TraceRegistry::TraceRegistry()
 
 }
 
-void TraceRegistry::SetDefaultTraceFilter(const CategorySet<TraceCategory>& traceFilter)
+void TraceRegistry::SetDefaultTraceFilter(const utility::EnumBitSet<TraceCategory>& traceFilter)
 {
     m_defaultTraceFilter = traceFilter;
     Lock lock(m_updateListenerMutex);
@@ -41,12 +43,12 @@ void TraceRegistry::SetDefaultTraceFilter(const CategorySet<TraceCategory>& trac
     }
 }
 
-CategorySet<TraceCategory> TraceRegistry::GetDefaultTraceFilter() const
+utility::EnumBitSet<TraceCategory> TraceRegistry::GetDefaultTraceFilter() const
 {
     return m_defaultTraceFilter;
 }
 
-CategorySet<TraceCategory> TraceRegistry::GetTraceFilter(const std::string& compilationUnitName)
+utility::EnumBitSet<TraceCategory> TraceRegistry::GetTraceFilter(const std::string& compilationUnitName)
 {
     auto entry = FindCompilationUnit(compilationUnitName);
     if (entry != nullptr)
@@ -54,7 +56,7 @@ CategorySet<TraceCategory> TraceRegistry::GetTraceFilter(const std::string& comp
     return {};
 }
 
-void TraceRegistry::SetTraceFilter(const std::string& compilationUnitName, const CategorySet<TraceCategory>& traceFilter)
+void TraceRegistry::SetTraceFilter(const std::string& compilationUnitName, const utility::EnumBitSet<TraceCategory>& traceFilter)
 {
     auto entry = FindCompilationUnit(compilationUnitName);
     if (entry != nullptr)
@@ -71,7 +73,7 @@ bool TraceRegistry::IsTraceCategoryEnabled(const std::string& compilationUnitNam
     auto entry = FindCompilationUnit(compilationUnitName);
     if (entry != nullptr)
         return entry->IsTraceCategoryEnabled(category);
-    return m_defaultTraceFilter.is_set(category);
+    return m_defaultTraceFilter.IsSet(category);
 }
 
 void TraceRegistry::SubscribeUpdateListener(ITraceRegistryUpdateListener* listener)

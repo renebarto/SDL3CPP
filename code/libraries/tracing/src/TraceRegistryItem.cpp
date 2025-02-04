@@ -45,19 +45,19 @@ const std::string& TraceRegistryItem::CompilationUnitFileName() const
     return m_compilationUnitFileName;
 }
 
-void TraceRegistryItem::SetTraceFilter(const CategorySet<TraceCategory>& traceFilter)
+void TraceRegistryItem::SetTraceFilter(const utility::EnumBitSet<TraceCategory>& traceFilter)
 {
     m_traceFilter = traceFilter;
 }
 
-CategorySet<TraceCategory> TraceRegistryItem::GetTraceFilter() const
+utility::EnumBitSet<TraceCategory> TraceRegistryItem::GetTraceFilter() const
 {
     return m_traceFilter;
 }
 
 bool TraceRegistryItem::IsTraceCategoryEnabled(TraceCategory category) const
 {
-    return m_traceFilter.is_set(category);
+    return m_traceFilter.IsSet(category);
 }
 
 std::ostream& operator << (std::ostream& stream, const tracing::TraceRegistryItem& value)

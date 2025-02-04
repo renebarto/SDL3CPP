@@ -58,7 +58,7 @@ set(PROJECT_LIBS
     )
 
 set(PROJECT_SOURCES 
-    ${PROJECT_SOURCE_DIR}/src/CategorySetTest.cpp
+    
     ${PROJECT_SOURCE_DIR}/src/ConsoleLogLineWriterTest.cpp
     ${PROJECT_SOURCE_DIR}/src/ConsoleTraceLineWriterTest.cpp
     ${PROJECT_SOURCE_DIR}/src/FatalHandlerTest.cpp

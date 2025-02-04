@@ -16,8 +16,8 @@
 #include <map>
 #include <mutex>
 #include <string>
+#include "utility/EnumBitSet.h"
 #include "utility/Serialization.h"
-#include "tracing/CategorySet.h"
 #include "tracing/TraceCategory.h"
 
 namespace tracing {
@@ -28,7 +28,7 @@ class ITraceRegistryUpdateListener;
 class TraceRegistry
 {
 private:
-    CategorySet<TraceCategory> m_defaultTraceFilter;
+    utility::EnumBitSet<TraceCategory> m_defaultTraceFilter;
     using RegistryMap = std::map<std::string, TraceRegistryItem*>;
     RegistryMap m_traceEntries;
     using Mutex = std::mutex;
@@ -39,10 +39,10 @@ private:
 public:
     TraceRegistry();
 
-    void SetDefaultTraceFilter(const CategorySet<TraceCategory>& traceFilter);
-    CategorySet<TraceCategory> GetDefaultTraceFilter() const;
-    CategorySet<TraceCategory> GetTraceFilter(const std::string& compilationUnitName);
-    void SetTraceFilter(const std::string& compilationUnitName, const CategorySet<TraceCategory>& traceFilter);
+    void SetDefaultTraceFilter(const utility::EnumBitSet<TraceCategory>& traceFilter);
+    utility::EnumBitSet<TraceCategory> GetDefaultTraceFilter() const;
+    utility::EnumBitSet<TraceCategory> GetTraceFilter(const std::string& compilationUnitName);
+    void SetTraceFilter(const std::string& compilationUnitName, const utility::EnumBitSet<TraceCategory>& traceFilter);
     bool IsTraceCategoryEnabled(const std::string& compilationUnitName, TraceCategory category) const;
 
     void SubscribeUpdateListener(ITraceRegistryUpdateListener* listener);

@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "tracing/CategorySet.h"
+#include "utility/EnumBitSet.h"
 #include "tracing/TraceCategory.h"
 
 namespace tracing {
@@ -25,7 +25,7 @@ class ITraceRegistryUpdateListener
 public:
     virtual ~ITraceRegistryUpdateListener() = default;
 
-    virtual void UpdateDefaultFilter(const CategorySet<TraceCategory>& defaultFilter) = 0;
+    virtual void UpdateDefaultFilter(const utility::EnumBitSet<TraceCategory>& defaultFilter) = 0;
     virtual void UpdateTraceRegistryItem(const TraceRegistryItem* entry) = 0;
 };
 

@@ -40,7 +40,7 @@ class TracingTest : public ::testing::Test
 {
 public:
     int m_exitCode;
-    CategorySet<TraceCategory> m_savedTraceFilter;
+    utility::EnumBitSet<TraceCategory> m_savedTraceFilter;
     StringTraceLineWriter m_lineWriter;
     TraceWriter m_traceWriter;
 

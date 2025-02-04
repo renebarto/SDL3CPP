@@ -25,7 +25,7 @@ class MockTraceRegistryUpdateListener
 public:
     virtual ~MockTraceRegistryUpdateListener() = default;
 
-    MOCK_METHOD(void, UpdateDefaultFilter, (const CategorySet<TraceCategory>& defaultFilter), (override));
+    MOCK_METHOD(void, UpdateDefaultFilter, (const utility::EnumBitSet<TraceCategory>& defaultFilter), (override));
     MOCK_METHOD(void, UpdateTraceRegistryItem, (const TraceRegistryItem* entry), (override));
 };
 

@@ -19,7 +19,7 @@
 #include "osal/utilities/Clock.h"
 #include "utility/Format.h"
 #include "utility/GenericError.h"
-#include "tracing/CategorySet.h"
+#include "utility/EnumBitSet.h"
 #include "tracing/TraceCategory.h"
 
 namespace utility {
@@ -42,7 +42,7 @@ private:
     static IsTraceCategoryEnabledFunction m_isTraceCategoryEnabledFunc;
 
     static ITraceWriter* m_traceWriter;
-    static CategorySet<TraceCategory> m_defaultTraceFilter;
+    static utility::EnumBitSet<TraceCategory> m_defaultTraceFilter;
 
     typedef std::recursive_mutex Mutex;
     typedef std::lock_guard<Mutex> Lock;
@@ -52,8 +52,8 @@ public:
     Tracing() = default;
     virtual ~Tracing() noexcept;
     
-    static void SetDefaultTraceFilter(const CategorySet<TraceCategory>& defaultFilter);
-    static CategorySet<TraceCategory> GetDefaultTraceFilter();
+    static void SetDefaultTraceFilter(const utility::EnumBitSet<TraceCategory>& defaultFilter);
+    static utility::EnumBitSet<TraceCategory> GetDefaultTraceFilter();
 
     static void SetTracingEnabledFunction(IsTraceCategoryEnabledFunction enabledFunc);
     

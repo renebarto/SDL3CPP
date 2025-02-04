@@ -14,7 +14,7 @@
 #pragma once
 
 #include "utility/Serialization.h"
-#include "tracing/CategorySet.h"
+#include "utility/EnumBitSet.h"
 #include "tracing/TraceCategory.h"
 #include "tracing/TraceHelpers.h"
 #include "tracing/TraceRegistry.h"
@@ -24,15 +24,15 @@ namespace tracing {
 class TraceRegistryItem
 {
 private:
-    CategorySet<TraceCategory> m_traceFilter;
+    utility::EnumBitSet<TraceCategory> m_traceFilter;
     std::string m_compilationUnitFileName;
 
 public:
     TraceRegistryItem(const std::string& compilationUnitFileName, TraceRegistry& traceRegistry);
 
     const std::string& CompilationUnitFileName() const;
-    void SetTraceFilter(const CategorySet<TraceCategory>& traceFilter);
-    CategorySet<TraceCategory> GetTraceFilter() const;
+    void SetTraceFilter(const utility::EnumBitSet<TraceCategory>& traceFilter);
+    utility::EnumBitSet<TraceCategory> GetTraceFilter() const;
     bool IsTraceCategoryEnabled(TraceCategory category) const;
 };
 

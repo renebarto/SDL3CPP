@@ -24,10 +24,12 @@
 #include "tracing/TraceHelpers.h"
 #include "tracing/TraceWriter.h"
 
+using namespace utility;
+
 namespace tracing {
 
 IsTraceCategoryEnabledFunction Tracing::m_isTraceCategoryEnabledFunc = nullptr;
-CategorySet<TraceCategory> Tracing::m_defaultTraceFilter = 
+utility::EnumBitSet<TraceCategory> Tracing::m_defaultTraceFilter = 
     (TraceCategory::Fatal | TraceCategory::Error | TraceCategory::Information);
 Tracing::Mutex Tracing::m_traceMutex;
 ITraceWriter* Tracing::m_traceWriter = nullptr;
@@ -44,12 +46,12 @@ void Tracing::SetTracingEnabledFunction(IsTraceCategoryEnabledFunction enabledFu
     m_isTraceCategoryEnabledFunc = enabledFunc;
 }
 
-void Tracing::SetDefaultTraceFilter(const CategorySet<TraceCategory>& defaultFilter)
+void Tracing::SetDefaultTraceFilter(const utility::EnumBitSet<TraceCategory>& defaultFilter)
 {
     Tracing::m_defaultTraceFilter = defaultFilter;
 }
 
-CategorySet<TraceCategory> Tracing::GetDefaultTraceFilter()
+utility::EnumBitSet<TraceCategory> Tracing::GetDefaultTraceFilter()
 {
     return Tracing::m_defaultTraceFilter;
 }
@@ -67,7 +69,7 @@ bool Tracing::IsTraceCategoryEnabled(TraceCategory category)
     }
     else
     {
-        return m_defaultTraceFilter.is_set(category);
+        return m_defaultTraceFilter.IsSet(category);
     }
 }
 

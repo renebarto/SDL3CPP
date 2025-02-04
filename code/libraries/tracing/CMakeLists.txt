@@ -67,7 +67,7 @@ set(PROJECT_SOURCES
 set(PROJECT_INCLUDES_PRIVATE
     )
 set(PROJECT_INCLUDES_PUBLIC
-    include/tracing/CategorySet.h
+    
     include/tracing/ConsoleLogLineWriter.h
     include/tracing/ConsoleTraceLineWriter.h
     include/tracing/FatalHandler.h

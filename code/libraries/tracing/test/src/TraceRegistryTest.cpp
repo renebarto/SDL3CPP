@@ -22,6 +22,8 @@
 
 using ::testing::_;
 
+using namespace utility;
+
 namespace tracing {
 
 TEST(TraceRegistryTest, FindCompilationUnit)
@@ -70,7 +72,7 @@ TEST(TraceRegistryTest, TraceRegistryUpdateListenerIsNotCalledIfNotSubscribed)
 
     MockTraceRegistryUpdateListener listener;
 
-    CategorySet<TraceCategory> defaultFilter = TraceCategory::FunctionEnter | TraceCategory::FunctionLeave;
+    utility::EnumBitSet<TraceCategory> defaultFilter = TraceCategory::FunctionEnter | TraceCategory::FunctionLeave;
     EXPECT_CALL(listener, UpdateDefaultFilter(defaultFilter)).Times(0);
 
     registry.SetDefaultTraceFilter(defaultFilter);
@@ -83,7 +85,7 @@ TEST(TraceRegistryTest, TraceRegistryUpdateListenerIsCalledWhenDefaultTraceFilte
     MockTraceRegistryUpdateListener listener;
     registry.SubscribeUpdateListener(&listener);
 
-    CategorySet<TraceCategory> defaultFilter = TraceCategory::FunctionEnter | TraceCategory::FunctionLeave;
+    utility::EnumBitSet<TraceCategory> defaultFilter = TraceCategory::FunctionEnter | TraceCategory::FunctionLeave;
     EXPECT_CALL(listener, UpdateDefaultFilter(defaultFilter)).Times(1);
 
     registry.SetDefaultTraceFilter(defaultFilter);
@@ -162,7 +164,7 @@ TEST(TraceRegistryTest, Serialize)
 
     std::ostringstream stream;
     stream << registry;
-    EXPECT_EQ("dummy:0x0000000F\ndummy2:0x0000000F\n", stream.str());
+    EXPECT_EQ("dummy:Information|Warning|Error|Fatal\ndummy2:Information|Warning|Error|Fatal\n", stream.str());
 }
 
 TEST(TraceRegistryTest, SerializeActual)

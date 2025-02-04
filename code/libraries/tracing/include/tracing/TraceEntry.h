@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "tracing/CategorySet.h"
+#include "utility/EnumBitSet.h"
 #include "tracing/TraceCategory.h"
 #include "tracing/TraceHelpers.h"
 #include "tracing/TraceRegistry.h"
@@ -23,14 +23,14 @@ namespace tracing {
 class TraceEntry
 {
 private:
-    CategorySet<TraceCategory> m_traceFilter;
+    utility::EnumBitSet<TraceCategory> m_traceFilter;
     std::string m_compilationUnitFileName;
 
 public:
     TraceEntry(const std::string& compilationUnitFileName, TraceRegistry& traceRegistry);
 
     const std::string& CompilationUnitFileName() const;
-    void SetTraceFilter(const CategorySet<TraceCategory>& traceFilter);
+    void SetTraceFilter(const utility::EnumBitSet<TraceCategory>& traceFilter);
     bool IsTraceCategoryEnabled(TraceCategory category) const;
 };
 
