@@ -73,14 +73,14 @@ public:
     Point GetSize(const char32_t *text) const;
     Point GetSize(const std::u32string &text) const;
 
-    Surface RenderSolid(const char *text, Color fg);
-    Surface RenderSolid(const std::string &text, Color fg);
-    Surface RenderSolidUTF8(const char *text, Color fg);
-    Surface RenderSolidUTF8(const std::string &text, Color fg);
-    Surface RenderSolid(const char16_t *text, Color fg);
-    Surface RenderSolid(const std::u16string &text, Color fg);
-    Surface RenderSolid(const char32_t *text, Color fg);
-    Surface RenderSolid(const std::u32string &text, Color fg);
+    Surface RenderSolid(const char *text, Color fg) const;
+    Surface RenderSolid(const std::string &text, Color fg) const;
+    Surface RenderSolidUTF8(const char *text, Color fg) const;
+    Surface RenderSolidUTF8(const std::string &text, Color fg) const;
+    Surface RenderSolid(const char16_t *text, Color fg) const;
+    Surface RenderSolid(const std::u16string &text, Color fg) const;
+    Surface RenderSolid(const char32_t *text, Color fg) const;
+    Surface RenderSolid(const std::u32string &text, Color fg) const;
 
     Surface RenderGlyph_Solid(char16_t ch, Color fg);
 

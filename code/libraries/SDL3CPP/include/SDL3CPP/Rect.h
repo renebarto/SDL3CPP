@@ -6,6 +6,7 @@
 
 #include "SDL3CPP/Optional.h"
 #include "SDL3CPP/Point.h"
+#include "SDL3CPP/Size.h"
 
 namespace SDL3CPP {
 
@@ -25,7 +26,7 @@ public:
     {
     }
 
-    constexpr Rect(const Point &corner, const Point &size)
+    constexpr Rect(const Point &corner, const Size &size)
         : SDL_Rect{corner.x, corner.y, size.x, size.y}
     {
     }
@@ -44,7 +45,7 @@ public:
         return Rect(cx - w / 2, cy - h / 2, w, h);
     }
 
-    static constexpr Rect FromCenter(const Point &center, const Point &size)
+    static constexpr Rect FromCenter(const Point &center, const Size &size)
     {
         return Rect(center - size / 2, size);
     }
@@ -149,9 +150,9 @@ public:
         return Point(GetX2(), GetY2());
     }
 
-    constexpr Point GetSize() const
+    constexpr Size GetSize() const
     {
-        return Point(w, h);
+        return Size(w, h);
     }
 
     constexpr Point GetCentroid() const

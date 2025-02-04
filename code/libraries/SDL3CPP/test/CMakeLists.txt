@@ -60,6 +60,7 @@ set(PROJECT_SOURCES
     ${PROJECT_SOURCE_DIR}/src/OptionalTest.cpp
     ${PROJECT_SOURCE_DIR}/src/PointTest.cpp
     ${PROJECT_SOURCE_DIR}/src/RectTest.cpp
+    ${PROJECT_SOURCE_DIR}/src/SizeTest.cpp
     )
 set(PROJECT_SOURCES_${PROJECT_NAME}
     ${PROJECT_SOURCES}

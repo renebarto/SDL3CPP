@@ -71,6 +71,11 @@ SDL_Surface *Window::GetSurface() const
     return SDL_GetWindowSurface(m_window);
 }
 
+WindowID Window::GetID() const
+{
+    return SDL_GetWindowID(m_window);
+}
+
 Point Window::GetSize() const
 {
     int w, h;

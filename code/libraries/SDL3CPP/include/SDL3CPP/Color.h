@@ -34,6 +34,15 @@ public:
     Color &operator=(const Color &) noexcept = default;
     Color &operator=(Color &&) noexcept = default;
 
+    static const Color Black;
+    static const Color Red;
+    static const Color Green;
+    static const Color Yellow;
+    static const Color Blue;
+    static const Color Magenta;
+    static const Color Cyan;
+    static const Color White;
+
     constexpr uint8_t GetRed() const
     {
         return r;

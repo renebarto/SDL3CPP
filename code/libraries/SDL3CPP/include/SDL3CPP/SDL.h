@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <string>
 #include "utility/Format.h"
+#include "core/utilities/Singleton.h"
 #include "SDL3CPP/AudioConfiguration.h"
 #include "SDL3CPP/DisplayConfiguration.h"
 
@@ -38,7 +39,7 @@ bool operator ==(uint32_t lhs, SDLInitFlags rhs);
 bool operator !=(SDLInitFlags lhs, uint32_t rhs);
 bool operator !=(uint32_t lhs, SDLInitFlags rhs);
 
-class SDL
+class SDL : Singleton<SDL>
 {
 private:
     SDLInitFlags m_flags;
@@ -47,7 +48,6 @@ private:
 
 public:
     static const SDLInitFlags DefaultFlags;
-    friend SDL &GetSDL(SDLInitFlags flags = DefaultFlags);
     SDL(SDLInitFlags flags = DefaultFlags);
     virtual ~SDL();
 
@@ -71,7 +71,5 @@ public:
     DisplayConfiguration GetDisplayConfiguration() const;
     AudioConfiguration GetAudioConfiguration() const;
 };
-
-SDL &GetSDL(SDLInitFlags flags /*= DefaultFlags*/);
 
 } // namespace SDL3CPP

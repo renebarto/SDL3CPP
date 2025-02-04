@@ -74,7 +74,7 @@ int Font::GetStyle() const
     return {};
 }
 
-Font &Font::SetStyle(int style /*= TTF_STYLE_NORMAL*/)
+Font &Font::SetStyle(int /*style*/ /*= TTF_STYLE_NORMAL*/)
 {
     return *this;
 }
@@ -84,7 +84,7 @@ int Font::GetOutline() const
     return {};
 }
 
-Font &Font::SetOutline(int outline /*= 0*/)
+Font &Font::SetOutline(int /*outline*/ /*= 0*/)
 {
     return *this;
 }
@@ -94,7 +94,7 @@ int Font::GetHinting() const
     return {};
 }
 
-Font &Font::SetHinting(int hinting /*= TTF_HINTING_NORMAL*/)
+Font &Font::SetHinting(int /*hinting*/ /*= TTF_HINTING_NORMAL*/)
 {
     return *this;
 }
@@ -104,7 +104,7 @@ bool Font::GetKerning() const
     return {};
 }
 
-Font &Font::SetKerning(bool allowed /*= true*/)
+Font &Font::SetKerning(bool /*allowed*/ /*= true*/)
 {
     return *this;
 }
@@ -149,151 +149,165 @@ Optional<std::string> Font::GetStyleName() const
     return {};
 }
 
-int Font::IsGlyphProvided(char16_t ch) const
+int Font::IsGlyphProvided(char16_t /*ch*/) const
 {
     return {};
 }
 
-void Font::GetGlyphMetrics(char16_t ch, int &minx, int &maxx, int &miny, int &maxy, int &advance) const
+void Font::GetGlyphMetrics(char16_t /*ch*/, int &/*minx*/, int &/*maxx*/, int &/*miny*/, int &/*maxy*/, int &/*advance*/) const
 {
 }
 
-Rect Font::GetGlyphRect(char16_t ch) const
-{
-    return {};
-}
-
-int Font::GetGlyphAdvance(char16_t ch) const
+Rect Font::GetGlyphRect(char16_t /*ch*/) const
 {
     return {};
 }
 
-Point Font::GetSize(const char *text)
+int Font::GetGlyphAdvance(char16_t /*ch*/) const
 {
     return {};
 }
 
-Point Font::GetSize(const std::string &text) const
+Point Font::GetSize(const char */*text*/)
 {
     return {};
 }
 
-Point Font::GetSizeUTF8(const char *text)
+Point Font::GetSize(const std::string &/*text*/) const
 {
     return {};
 }
 
-Point Font::GetSizeUTF8(const std::string &text) const
+Point Font::GetSizeUTF8(const char */*text*/)
 {
     return {};
 }
 
-Point Font::GetSize(const char16_t *text) const
+Point Font::GetSizeUTF8(const std::string &/*text*/) const
 {
     return {};
 }
 
-Point Font::GetSize(const std::u16string &text) const
+Point Font::GetSize(const char16_t */*text*/) const
 {
     return {};
 }
 
-Point Font::GetSize(const char32_t *text) const
+Point Font::GetSize(const std::u16string &/*text*/) const
 {
     return {};
 }
 
-Point Font::GetSize(const std::u32string &text) const
+Point Font::GetSize(const char32_t */*text*/) const
 {
     return {};
 }
 
-Surface Font::RenderSolid(const char *text, Color fg)
+Point Font::GetSize(const std::u32string &/*text*/) const
 {
     return {};
 }
 
-Surface Font::RenderSolid(const std::string &text, Color fg)
+Surface Font::RenderSolid(const char *text, Color fg) const
+{
+    SDL_Surface *surface = TTF_RenderText_Solid(m_font, text, strlen(text), fg);
+    if (surface == nullptr)
+    {
+        std::ostringstream stream;
+        stream << "TTF_RenderText_Solid failed: " << SDL_GetError();
+        throw std::runtime_error(stream.str());
+    }
+    return Surface(surface);
+}
+
+Surface Font::RenderSolid(const std::string &text, Color fg) const
+{
+    SDL_Surface *surface = TTF_RenderText_Solid(m_font, text.c_str(), text.length(), fg);
+    if (surface == nullptr)
+    {
+        std::ostringstream stream;
+        stream << "TTF_RenderText_Solid failed: " << SDL_GetError();
+        throw std::runtime_error(stream.str());
+    }
+    return Surface(surface);
+}
+
+Surface Font::RenderSolidUTF8(const char */*text*/, Color /*fg*/) const
 {
     return {};
 }
 
-Surface Font::RenderSolidUTF8(const char *text, Color fg)
+Surface Font::RenderSolidUTF8(const std::string &/*text*/, Color /*fg*/) const
 {
     return {};
 }
 
-Surface Font::RenderSolidUTF8(const std::string &text, Color fg)
+Surface Font::RenderSolid(const char16_t */*text*/, Color /*fg*/) const
 {
     return {};
 }
 
-Surface Font::RenderSolid(const char16_t *text, Color fg)
+Surface Font::RenderSolid(const std::u16string &/*text*/, Color /*fg*/) const
 {
     return {};
 }
 
-Surface Font::RenderSolid(const std::u16string &text, Color fg)
+Surface Font::RenderSolid(const char32_t */*text*/, Color /*fg*/) const
 {
     return {};
 }
 
-Surface Font::RenderSolid(const char32_t *text, Color fg)
+Surface Font::RenderSolid(const std::u32string &/*text*/, Color /*fg*/) const
 {
     return {};
 }
 
-Surface Font::RenderSolid(const std::u32string &text, Color fg)
+Surface Font::RenderGlyph_Solid(char16_t /*ch*/, Color /*fg*/)
 {
     return {};
 }
 
-Surface Font::RenderGlyph_Solid(char16_t ch, Color fg)
+Surface Font::RenderShaded(const char */*text*/, Color /*fg*/)
 {
     return {};
 }
 
-Surface Font::RenderShaded(const char *text, Color fg)
+Surface Font::RenderShaded(const std::string &/*text*/, Color /*fg*/, Color /*bg*/)
 {
     return {};
 }
 
-Surface Font::RenderShaded(const std::string &text, Color fg, Color bg)
+Surface Font::RenderShadedUTF8(const char */*text*/, Color /*fg*/)
 {
     return {};
 }
 
-Surface Font::RenderShadedUTF8(const char *text, Color fg)
+Surface Font::RenderShadedUTF8(const std::string &/*text*/, Color /*fg*/, Color /*bg*/)
 {
     return {};
 }
 
-Surface Font::RenderShadedUTF8(const std::string &text, Color fg, Color bg)
+Surface Font::RenderShaded(const char16_t */*text*/, Color /*fg*/, Color /*bg*/)
 {
     return {};
 }
 
-Surface Font::RenderShaded(const char16_t *text, Color fg, Color bg)
+Surface Font::RenderShaded(const std::u16string &/*text*/, Color /*fg*/, Color /*bg*/)
 {
     return {};
 }
 
-Surface Font::RenderShaded(const std::u16string &text, Color fg, Color bg)
+Surface Font::RenderShaded(const char32_t */*text*/, Color /*fg*/, Color /*bg*/)
 {
     return {};
 }
 
-Surface Font::RenderShaded(const char32_t *text, Color fg, Color bg)
+Surface Font::RenderShaded(const std::u32string &/*text*/, Color /*fg*/, Color /*bg*/)
 {
     return {};
 }
 
-Surface Font::RenderShaded(const std::u32string &text, Color fg, Color bg)
-{
-    return {};
-}
-
-Surface Font::RenderGlyphShaded(char16_t ch, Color fg, Color bg)
+Surface Font::RenderGlyphShaded(char16_t /*ch*/, Color /*fg*/, Color /*bg*/)
 {
     return {};
 }
@@ -334,32 +348,32 @@ Surface Font::RenderBlendedUTF8(const char *text, Color fg)
     return Surface(surface);
 }
 
-Surface Font::RenderBlendedUTF8(const std::string &text, Color fg)
+Surface Font::RenderBlendedUTF8(const std::string &/*text*/, Color /*fg*/)
 {
     return {};
 }
 
-Surface Font::RenderBlended(const char16_t *text, Color fg)
+Surface Font::RenderBlended(const char16_t */*text*/, Color /*fg*/)
 {
     return {};
 }
 
-Surface Font::RenderBlended(const std::u16string &text, Color fg)
+Surface Font::RenderBlended(const std::u16string &/*text*/, Color /*fg*/)
 {
     return {};
 }
 
-Surface Font::RenderBlended(const char32_t *text, Color fg)
+Surface Font::RenderBlended(const char32_t */*text*/, Color /*fg*/)
 {
     return {};
 }
 
-Surface Font::RenderBlended(const std::u32string &text, Color fg)
+Surface Font::RenderBlended(const std::u32string &/*text*/, Color /*fg*/)
 {
     return {};
 }
 
-Surface Font::RenderGlyphBlended(char16_t ch, Color fg)
+Surface Font::RenderGlyphBlended(char16_t /*ch*/, Color /*fg*/)
 {
     return {};
 }

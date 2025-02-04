@@ -3,12 +3,12 @@
 //
 // File        : RectTest.cpp
 //
-// Namespace   : SDL2
+// Namespace   : SDL3CPP
 //
 // Class       : -
 //
 // Description : 
-//  Test for SDL2 Rect class
+//  Test for SDL3CPP Rect class
 //
 //------------------------------------------------------------------------------
 

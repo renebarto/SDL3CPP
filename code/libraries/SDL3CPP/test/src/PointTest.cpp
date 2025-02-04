@@ -3,12 +3,12 @@
 //
 // File        : PointTest.cpp
 //
-// Namespace   : SDL2
+// Namespace   : SDL3CPP
 //
 // Class       : -
 //
 // Description : 
-//  Test for SDL2 Point class
+//  Test for SDL3CPP Point class
 //
 //------------------------------------------------------------------------------
 

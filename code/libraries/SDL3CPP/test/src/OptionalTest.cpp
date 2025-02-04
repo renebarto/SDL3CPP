@@ -3,12 +3,12 @@
 //
 // File        : OptionalTest.cpp
 //
-// Namespace   : SDL2
+// Namespace   : SDL3CPP
 //
 // Class       : -
 //
 // Description : 
-//  Test for SDL2 Optional template
+//  Test for SDL3CPP Optional template
 //
 //------------------------------------------------------------------------------
 

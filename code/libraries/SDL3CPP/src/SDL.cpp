@@ -198,9 +198,3 @@ AudioConfiguration SDL::GetAudioConfiguration() const
 {
     return m_audioConfiguration;
 }
-
-SDL &SDL3CPP::GetSDL(SDLInitFlags flags /*= DefaultFlags*/)
-{
-    static SDL instance{ flags };
-    return instance;
-}

@@ -3,12 +3,12 @@
 //
 // File        : FPointTest.cpp
 //
-// Namespace   : SDL2
+// Namespace   : SDL3CPP
 //
 // Class       : -
 //
 // Description : 
-//  Test for SDL2 FPoint class
+//  Test for SDL3CPP FPoint class
 //
 //------------------------------------------------------------------------------
 

@@ -13,6 +13,7 @@ namespace SDL3CPP {
 
 class Surface;
 class Point;
+using WindowID = SDL_WindowID;
 
 ////////////////////////////////////////////////////////////
 /// \brief GUI window object
@@ -63,6 +64,7 @@ class Window
     SDL_Window *Get() const;
     SDL_Surface *GetSurface() const;
 
+    WindowID GetID() const;
     Point GetSize() const;
     int GetWidth() const;
     int GetHeight() const;

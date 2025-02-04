@@ -34,6 +34,7 @@ set(PROJECT_LIBS
     SDL3_image::SDL3_image
     SDL3_ttf::SDL3_ttf
     SDL3_mixer::SDL3_mixer
+    core
     utility
     ${LINKER_LIBRARIES}
     ${PROJECT_DEPENDENCIES}
@@ -55,8 +56,10 @@ set(PROJECT_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/SDL.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/SDLImage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/SDLTTF.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Size.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Surface.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Texture.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Timers.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Window.cpp
     )
 
@@ -80,8 +83,10 @@ set(PROJECT_INCLUDES_PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3CPP/SDL.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3CPP/SDLImage.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3CPP/SDLTTF.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3CPP/Size.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3CPP/Surface.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3CPP/Texture.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3CPP/Timers.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SDL3CPP/Window.h
     )
 
