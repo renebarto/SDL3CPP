@@ -56,6 +56,7 @@ set(PROJECT_LIBS
 set(PROJECT_SOURCES 
     ${PROJECT_SOURCE_DIR}/src/DeserializationTest.cpp
     ${PROJECT_SOURCE_DIR}/src/EndianTest.cpp
+    ${PROJECT_SOURCE_DIR}/src/EnumBitSetTest.cpp
     ${PROJECT_SOURCE_DIR}/src/ErrorTest.cpp
     ${PROJECT_SOURCE_DIR}/src/FormatTest.cpp
     ${PROJECT_SOURCE_DIR}/src/GenericErrorTest.cpp

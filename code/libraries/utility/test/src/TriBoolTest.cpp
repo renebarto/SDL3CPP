@@ -184,21 +184,21 @@ TEST(TriBoolTest, StreamingOutOperator)
     EXPECT_EQ(falseString + " " + trueString + " " + indeterminateString, str.str());
 }
 
+#ifdef _MSC_VER
+#pragma warning(disable: 4866)
+#endif
 TEST(TriBoolTest, StreamingOutOperatorIndeterminate)
 {
     std::ostringstream str;
     std::string indeterminateString("indeterminate");
 
-#ifdef _MSC_VER
-#pragma warning(disable: 4866)
-#endif
     str << TriBool::Value::Indeterminate;
-#ifdef _MSC_VER
-#pragma warning(default: 4866)
-#endif
 
     EXPECT_EQ(indeterminateString, str.str());
 }
+#ifdef _MSC_VER
+#pragma warning(default: 4866)
+#endif
 
 TEST(TriBoolTest, StreamingInOperator)
 {

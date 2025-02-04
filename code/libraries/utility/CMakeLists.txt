@@ -61,6 +61,7 @@ set(PROJECT_INCLUDES_PRIVATE
 set(PROJECT_INCLUDES_PUBLIC
     include/utility/Deserialization.h
     include/utility/Endian.h
+    include/utility/EnumBitSet.h
     include/utility/Error.h
     include/utility/Format.h
     include/utility/GenericError.h
